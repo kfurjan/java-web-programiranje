@@ -1,3 +1,10 @@
+<%-- 
+    Document   : index
+    Created on : May 12, 2021, 9:02:49 PM
+    Author     : efurkev
+--%>
+
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
