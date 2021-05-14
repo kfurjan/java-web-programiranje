@@ -11,7 +11,6 @@
 <html>
     <head>
         <title>JWP WebShop</title>
-        <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <jwp:css-tag/>
     </head>
@@ -39,7 +38,7 @@
                     </ul>
                     <ul class="navbar-nav me-end mb-2 mb-lg-0">
                         <li class="nav-item mx-2">
-                            <a class="nav-link custom-underline active" href="#">
+                            <a class="nav-link custom-underline active" href="/login.jsp">
                                 <i class="bi bi-person"></i> Sign in
                             </a>
                         </li>
