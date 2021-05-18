@@ -35,7 +35,7 @@
             <div class="contaienr p-5">
                 <div class="row justify-content-center">
                     <div class="col-md-3"></div>
-                    <div class="col-md-3 bg-light rounded p-5 border border-info">
+                    <div class="col-md-4 bg-light rounded p-5 border border-info">
                         <h4 class="text-center my-3">Sign in</h4>
                         <div class="form-group my-3">
                             <label for="email" class="form-text">Email address</label>
