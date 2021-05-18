@@ -36,7 +36,7 @@
                 <div class="row justify-content-center">
                     <div class="col-md-3"></div>
                     <div class="col-md-4 bg-light rounded p-5 border border-info">
-                        <h4 class="text-center my-3">Sign in</h4>
+                        <h4 class="text-center my-3">Register new user</h4>
                         <div class="form-group my-3">
                             <label for="email" class="form-text">Email address</label>
                             <input type="email" class="form-control" name="email" placeholder="name@example.com">
@@ -50,7 +50,7 @@
                             <input type="password" class="form-control" name="passwordRepeat">
                         </div>
                         <div class="form-group text-center my-3">
-                            <input type="submit" value="Sign in" class="btn btn-outline-primary" />
+                            <input type="submit" value="Register" class="btn btn-outline-primary" />
                         </div>
                     </div>
                     <div class="col-md-3"></div>
