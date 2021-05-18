@@ -1,6 +1,6 @@
 <%-- 
-    Document   : login
-    Created on : May 14, 2021, 8:12:29 PM
+    Document   : register
+    Created on : May 18, 2021, 9:40:48 AM
     Author     : efurkev
 --%>
 
@@ -10,7 +10,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Sign in</title>
+        <title>Register user</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <jwp:css-tag/>
     </head>
@@ -31,7 +31,7 @@
             </div>
         </nav>
 
-        <form method="POST" action="/LoginServlet">
+        <form method="POST" action="/RegisterServlet">
             <div class="contaienr p-5">
                 <div class="row justify-content-center">
                     <div class="col-md-3"></div>
@@ -45,14 +45,12 @@
                             <label for="password" class="form-text">Password</label>
                             <input type="password" class="form-control" name="password">
                         </div>
+                        <div class="form-group my-3">
+                            <label for="passwordRepeat" class="form-text">Repeat password</label>
+                            <input type="password" class="form-control" name="passwordRepeat">
+                        </div>
                         <div class="form-group text-center my-3">
                             <input type="submit" value="Sign in" class="btn btn-outline-primary" />
-                        </div>
-                        
-                        <hr class="mt-4" />
-                        
-                        <div class="text-center">
-                            <a class="link-dark" aria-current="page" href="/register.jsp">Register</a>
                         </div>
                     </div>
                     <div class="col-md-3"></div>
