@@ -57,7 +57,7 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        response.sendRedirect("/login.jsp");
     }
 
     /**
@@ -73,9 +73,11 @@ public class LoginServlet extends HttpServlet {
             throws ServletException, IOException {
         String email = request.getParameter(Strings.EMAIL);
         String password = request.getParameter(Strings.PASSWORD);
-        
-        System.out.println(email);
-        System.out.println(password);
+
+        try (PrintWriter out = response.getWriter()) {
+            out.println(email);
+            out.println(password);
+        }
     }
 
     /**

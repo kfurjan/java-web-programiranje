@@ -38,8 +38,8 @@
                     </ul>
                     <ul class="navbar-nav me-end mb-2 mb-lg-0">
                         <li class="nav-item mx-2">
-                            <a class="nav-link custom-underline active" href="/login.jsp">
-                                <i class="bi bi-person"></i> Sign in
+                            <a class="nav-link custom-underline active" href="/Login">
+                                <i class="bi bi-person"></i> Login
                             </a>
                         </li>
                         <li class="nav-itemw mx-2">

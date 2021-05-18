@@ -31,7 +31,7 @@
             </div>
         </nav>
 
-        <form method="POST" action="/RegisterServlet">
+        <form method="POST" action="/Register">
             <div class="contaienr p-5">
                 <div class="row justify-content-center">
                     <div class="col-md-3"></div>

@@ -57,7 +57,7 @@ public class RegisterServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        response.sendRedirect("/register.jsp");
     }
 
     /**
@@ -75,9 +75,11 @@ public class RegisterServlet extends HttpServlet {
         String password = request.getParameter(Strings.PASSWORD);
         String passwordRepeat = request.getParameter(Strings.PASSWORD_REPEAT);
 
-        System.out.println(email);
-        System.out.println(password);
-        System.out.println(passwordRepeat);
+        try (PrintWriter out = response.getWriter()) {
+            out.println(email);
+            out.println(password);
+            out.println(passwordRepeat);
+        }
     }
 
     /**
