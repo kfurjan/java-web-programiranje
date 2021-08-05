@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+  <persistence-unit name="JWP-WebShopPU" transaction-type="RESOURCE_LOCAL">
+    <provider>org.hibernate.ejb.HibernatePersistence</provider>
+    <class>hr.algebra.model.OrderItem</class>
+    <class>hr.algebra.model.UserType</class>
+    <class>hr.algebra.model.OrderDetail</class>
+    <class>hr.algebra.model.ProductCategory</class>
+    <class>hr.algebra.model.UserHistory</class>
+    <class>hr.algebra.model.PaymentDetail</class>
+    <class>hr.algebra.model.Product</class>
+    <class>hr.algebra.model.User</class>
+    <class>hr.algebra.model.PaymentStatus</class>
+    <class>hr.algebra.model.PaymentMethod</class>
+    <properties>
+      <property name="javax.persistence.jdbc.url" value="jdbc:sqlserver://localhost:1433;databaseName=JWP"/>
+      <property name="javax.persistence.jdbc.user" value="sa"/>
+      <property name="javax.persistence.jdbc.driver" value="com.microsoft.sqlserver.jdbc.SQLServerDriver"/>
+      <property name="javax.persistence.jdbc.password" value="sql"/>
+      <property name="hibernate.cache.provider_class" value="org.hibernate.cache.NoCacheProvider"/>
+      <property name="hibernate.dialect" value="org.hibernate.dialect.SQLServer2008Dialect"/>
+      <property name="hibernate.show_sql" value="true"/>
+      <property name="hibernate.hbm2ddl.auto" value="update"/>
+    </properties>
+  </persistence-unit>
+</persistence>
