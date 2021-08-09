@@ -6,6 +6,7 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib uri="http://algebra.hr/taglib" prefix="jwp" %>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <!DOCTYPE html>
 <html>
@@ -23,9 +24,6 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                        <li class="nav-item">
-                            <a class="nav-link custom-underline" aria-current="page" href="#">Home</a>
-                        </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle custom-underline" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 Categories
@@ -37,16 +35,42 @@
                         </li>
                     </ul>
                     <ul class="navbar-nav me-end mb-2 mb-lg-0">
-                        <li class="nav-item mx-2">
-                            <a class="nav-link custom-underline active" href="/Login">
-                                <i class="bi bi-person"></i> Login
-                            </a>
-                        </li>
                         <li class="nav-itemw mx-2">
                             <a class="nav-link custom-underline active" href="#">
                                 <i class="bi bi-cart2"></i> Cart
                             </a>
                         </li>
+                        <c:choose>
+                        <c:when test="${empty userKey}" >
+                            <li class="nav-item mx-2">
+                                <a class="nav-link custom-underline active" href="/Login">
+                                    <i class="bi bi-person"></i> Login
+                                </a>
+                            </li>
+                        </c:when>
+                        <c:otherwise>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle custom-underline" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    ${userKey}
+                                </a>
+                                    <c:choose>
+                                    <c:when test="${userKey.userType.type eq 'Admin'}" >
+                                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                            <li><a class="dropdown-item" href="/logout">Log out</a></li>
+                                            <li><a class="dropdown-item" href="/logout">User management</a></li>
+                                            <li><a class="dropdown-item" href="/logout">Product management</a></li>
+                                            <li><a class="dropdown-item" href="/logout">History management</a></li>
+                                        </ul>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                            <li><a class="dropdown-item" href="/logout">Log out</a></li>
+                                        </ul>
+                                    </c:otherwise>
+                                    </c:choose>
+                            </li>
+                        </c:otherwise>
+                        </c:choose>
                     </ul>
                 </div>
             </div>

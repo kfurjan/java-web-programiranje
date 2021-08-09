@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package hr.algebra.model;
 
 import java.io.Serializable;
@@ -10,6 +5,8 @@ import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -25,7 +22,7 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author Kevin
  */
 @Entity
-@Table(name = "User")
+@Table(name = "\"User\"")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "User.findAll", query = "SELECT u FROM User u")
@@ -33,11 +30,15 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "User.findByEmail", query = "SELECT u FROM User u WHERE u.email = :email")
     , @NamedQuery(name = "User.findByPassword", query = "SELECT u FROM User u WHERE u.password = :password")
     , @NamedQuery(name = "User.findByFirstName", query = "SELECT u FROM User u WHERE u.firstName = :firstName")
-    , @NamedQuery(name = "User.findByLastName", query = "SELECT u FROM User u WHERE u.lastName = :lastName")})
+    , @NamedQuery(name = "User.findByLastName", query = "SELECT u FROM User u WHERE u.lastName = :lastName")
+    , @NamedQuery(name = "User.loginUser", query = "SELECT u FROM User u WHERE u.email = :email AND u.password = :password")})
 public class User implements Serializable {
+    
+    public static final String LOGIN_USER_QUERY = "User.loginUser";
 
     private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "ID")
     private Integer id;
@@ -57,10 +58,9 @@ public class User implements Serializable {
     private List<UserHistory> userHistoryList;
     @JoinColumn(name = "UserTypeID", referencedColumnName = "ID")
     @ManyToOne
-    private UserType userTypeID;
+    private UserType userType;
 
-    public User() {
-    }
+    public User() { }
 
     public User(Integer id) {
         this.id = id;
@@ -130,12 +130,12 @@ public class User implements Serializable {
         this.userHistoryList = userHistoryList;
     }
 
-    public UserType getUserTypeID() {
-        return userTypeID;
+    public UserType getUserType() {
+        return userType;
     }
 
-    public void setUserTypeID(UserType userTypeID) {
-        this.userTypeID = userTypeID;
+    public void setUserType(UserType userType) {
+        this.userType = userType;
     }
 
     @Override
@@ -160,7 +160,6 @@ public class User implements Serializable {
 
     @Override
     public String toString() {
-        return "hr.algebra.model.User[ id=" + id + " ]";
+        return String.format("%s %s", firstName, lastName);
     }
-    
 }

@@ -6,6 +6,7 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib uri="http://algebra.hr/taglib" prefix="jwp" %>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <!DOCTYPE html>
 <html>
@@ -21,13 +22,6 @@
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                        <li class="nav-item">
-                            <a class="nav-link custom-underline" aria-current="page" href="/">Home</a>
-                        </li>
-                    </ul>
-                </div>
             </div>
         </nav>
 
@@ -37,6 +31,11 @@
                     <div class="col-md-3"></div>
                     <div class="col-md-4 bg-light rounded p-5 border border-info">
                         <h4 class="text-center my-3">Login</h4>
+                        <c:if test="${not empty errorMessageKey}">
+                            <div class="alert alert-danger" role="alert">
+                                ${errorMessageKey}
+                            </div>
+                         </c:if>
                         <div class="form-group my-3">
                             <label for="email" class="form-text">Email address</label>
                             <input type="email" class="form-control" name="email" placeholder="name@example.com">
