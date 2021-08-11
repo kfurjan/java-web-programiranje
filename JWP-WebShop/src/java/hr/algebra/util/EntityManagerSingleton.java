@@ -13,18 +13,31 @@ public class EntityManagerSingleton {
     
     private EntityManagerSingleton() { }
     
+    /**
+     * Get EntityManager instance. If instance exists return that one,
+     * otherwise create new one and return it.
+     * 
+     * @return EntityManager instance
+     */
     public static EntityManager getInstance() {
         
         if (instance == null) {
-            instance = createInstance();
+            instance = createInstance(Strings.PERSISTENCE_UNIT);
         }
+        
         return instance;
     }
     
-    private static EntityManager createInstance() {
+    /**
+     * Create EntityManager instance for given persistence unit.
+     * 
+     * @param persistenceUnit
+     * @return EntityManager
+     */
+    private static EntityManager createInstance(String persistenceUnit) {
         
-        return Persistence.createEntityManagerFactory(
-            Strings.PERSISTENCE_UNIT
-        ).createEntityManager();
+        return Persistence
+                .createEntityManagerFactory(persistenceUnit)
+                .createEntityManager();
     }
 }

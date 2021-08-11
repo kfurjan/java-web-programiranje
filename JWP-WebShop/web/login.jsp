@@ -31,9 +31,9 @@
                     <div class="col-md-3"></div>
                     <div class="col-md-4 bg-light rounded p-5 border border-info">
                         <h4 class="text-center my-3">Login</h4>
-                        <c:if test="${not empty errorMessageKey}">
+                        <c:if test="${not empty errorMessage}">
                             <div class="alert alert-danger" role="alert">
-                                ${errorMessageKey}
+                                ${errorMessage}
                             </div>
                          </c:if>
                         <div class="form-group my-3">

@@ -27,7 +27,7 @@ public class LogOutServlet extends HttpServlet {
             throws ServletException, IOException {
         HttpSession session = request.getSession();
         session.setAttribute(Strings.USER_KEY, null);
-        response.sendRedirect("/");
+        response.sendRedirect(Strings.HOME_ENDPOINT);
     }
 
     /**
@@ -43,7 +43,7 @@ public class LogOutServlet extends HttpServlet {
             throws ServletException, IOException {
         HttpSession session = request.getSession();
         session.setAttribute(Strings.USER_KEY, null);
-        response.sendRedirect("/");
+        response.sendRedirect(Strings.HOME_ENDPOINT);
     }
 
     /**

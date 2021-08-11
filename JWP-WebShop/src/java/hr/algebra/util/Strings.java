@@ -14,8 +14,8 @@ public class Strings {
     public static final String PASSWORD_REPEAT = "passwordRepeat";
     
     // request, session keys
-    public static final String USER_KEY = "userKey";
-    public static final String ERROR_MESSAGE_KEY = "errorMessageKey";
+    public static final String USER_KEY = "user";
+    public static final String ERROR_MESSAGE_KEY = "errorMessage";
     
     // view strings
     public static final String FIELDS_CANT_BE_EMPTY = "Fields cannot be empty!";
@@ -28,6 +28,6 @@ public class Strings {
     
     // application endpoints
     public static final String HOME_ENDPOINT = "/";
-    public static final String LOGIN_ENDPOINT = "/";
+    public static final String LOGIN_ENDPOINT = "/login.jsp";
     public static final String REGISTER_ENDPOINT = "/register.jsp";
 }

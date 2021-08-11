@@ -41,7 +41,7 @@
                             </a>
                         </li>
                         <c:choose>
-                        <c:when test="${empty userKey}" >
+                        <c:when test="${empty user}" >
                             <li class="nav-item mx-2">
                                 <a class="nav-link custom-underline active" href="/Login">
                                     <i class="bi bi-person"></i> Login
@@ -51,20 +51,23 @@
                         <c:otherwise>
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle custom-underline" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    ${userKey}
+                                    ${user}
                                 </a>
                                     <c:choose>
-                                    <c:when test="${userKey.userType.type eq 'Admin'}" >
+                                    <c:when test="${user.userType.type eq 'Admin'}" >
                                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                            <li><a class="dropdown-item" href="/logout">Log out</a></li>
-                                            <li><a class="dropdown-item" href="/logout">User management</a></li>
-                                            <li><a class="dropdown-item" href="/logout">Product management</a></li>
-                                            <li><a class="dropdown-item" href="/logout">History management</a></li>
+                                            <li><a class="dropdown-item" href="#">User management</a></li>
+                                            <li><a class="dropdown-item" href="#">Product management</a></li>
+                                            <li><a class="dropdown-item" href="#">History management</a></li>
+                                            <div class="dropdown-divider"></div>
+                                            <li><a class="dropdown-item text-danger" href="/logout">Log out</a></li>
                                         </ul>
                                     </c:when>
                                     <c:otherwise>
                                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                            <li><a class="dropdown-item" href="/logout">Log out</a></li>
+                                            <li><a class="dropdown-item" href="#">Completed purchases</a></li>
+                                            <div class="dropdown-divider"></div>
+                                            <li><a class="dropdown-item text-danger" href="/logout">Log out</a></li>
                                         </ul>
                                     </c:otherwise>
                                     </c:choose>
