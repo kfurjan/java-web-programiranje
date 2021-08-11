@@ -54,7 +54,7 @@ public class User implements Serializable {
     private String lastName;
     @OneToMany(mappedBy = "userID")
     private List<OrderDetail> orderDetailList;
-    @OneToMany(mappedBy = "userID")
+    @OneToMany(mappedBy = "user")
     private List<UserHistory> userHistoryList;
     @JoinColumn(name = "UserTypeID", referencedColumnName = "ID")
     @ManyToOne

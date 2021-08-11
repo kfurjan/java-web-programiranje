@@ -1,7 +1,7 @@
 <%-- 
-    Document   : index
-    Created on : May 12, 2021, 9:02:49 PM
-    Author     : efurkev
+    Document   : userHistory
+    Created on : 11.08.2021., 18:56:09
+    Author     : Kevin
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -11,12 +11,12 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>JWP WebShop</title>
+        <title>User history</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <jwp:css-tag/>
     </head>
     <body>
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+                <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
             <div class="container">
                 <a class="navbar-brand" href="/">JWP WebShop</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -78,7 +78,38 @@
                 </div>
             </div>
         </nav>
+
+        
+         <div class="container p-5">
+             <div class="row justify-content-center">
+                <table id="userHistoryTable" class="table table-striped table-borderless table-hover">
+                    <thead>
+                      <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">User</th>
+                        <th scope="col">Date and time</th>
+                        <th scope="col">IP Address</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                    <c:forEach items="${userHistory}" var="userHistory">
+                        <tr>
+                            <th scope="row">${userHistory.id}</th>
+                            <td>${userHistory.user}</td>
+                            <td>${userHistory.logInAt}</td>
+                            <td>${userHistory.ipAddress}</td>
+                        </tr>
+                    </c:forEach>
+                    </tbody>
+                  </table>
+             </div>
+         </div>
         
         <jwp:js-tag/>
+        <script>
+            $(document).ready(function () {
+                $('#userHistoryTable').DataTable();
+            });
+        </script>
     </body>
 </html>

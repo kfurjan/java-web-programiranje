@@ -1,9 +1,14 @@
 package hr.algebra.servlet;
 
 import hr.algebra.model.User;
+import hr.algebra.model.UserHistory;
 import hr.algebra.model.UserType;
 import hr.algebra.repository.auth.AuthenticationRepository;
 import hr.algebra.repository.auth.AuthenticationRepositoryFactory;
+import hr.algebra.repository.history.UserHistoryRepository;
+import hr.algebra.repository.history.UserHistoryRepositoryFactory;
+import hr.algebra.util.DateUtils;
+import hr.algebra.util.NetworkUtils;
 import hr.algebra.util.Strings;
 import java.io.IOException;
 import java.util.Optional;
@@ -20,6 +25,7 @@ import javax.servlet.http.HttpSession;
 public class RegisterServlet extends HttpServlet {
 
     private final AuthenticationRepository authRepository = AuthenticationRepositoryFactory.getRepository();
+    private final UserHistoryRepository userHistoryRepository = UserHistoryRepositoryFactory.getRepository();
 
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -75,6 +81,14 @@ public class RegisterServlet extends HttpServlet {
             Optional<User> dbUser = authRepository.registerUser(user);
             
             if (dbUser.isPresent()) {
+                userHistoryRepository.saveUserHistory(
+                    new UserHistory(
+                        dbUser.get(),
+                        DateUtils.getCurrentDate(Strings.DATE_PATTERN),
+                        NetworkUtils.getIpAddress()
+                    )
+                );
+                
                 HttpSession session = request.getSession();
                 session.setAttribute(Strings.USER_KEY, dbUser.get());
                 response.sendRedirect(Strings.HOME_ENDPOINT);
