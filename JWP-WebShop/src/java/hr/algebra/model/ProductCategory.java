@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package hr.algebra.model;
 
 import java.io.Serializable;
@@ -10,6 +5,8 @@ import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -31,9 +28,12 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "ProductCategory.findByName", query = "SELECT p FROM ProductCategory p WHERE p.name = :name")
     , @NamedQuery(name = "ProductCategory.findByDescription", query = "SELECT p FROM ProductCategory p WHERE p.description = :description")})
 public class ProductCategory implements Serializable {
+    
+    public static final String FIND_ALL_QUERY = "ProductCategory.findAll";
 
     private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "ID")
     private Integer id;
@@ -55,6 +55,17 @@ public class ProductCategory implements Serializable {
     public ProductCategory(Integer id, String name) {
         this.id = id;
         this.name = name;
+    }
+
+    public ProductCategory(String name, String description) {
+        this.name = name;
+        this.description = description;
+    }
+    
+    public ProductCategory(Integer id, String name, String description) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
     }
 
     public Integer getId() {
@@ -114,5 +125,4 @@ public class ProductCategory implements Serializable {
     public String toString() {
         return "hr.algebra.model.ProductCategory[ id=" + id + " ]";
     }
-    
 }

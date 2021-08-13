@@ -16,7 +16,8 @@
         <jwp:css-tag/>
     </head>
     <body>
-                <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+        <%-- NAVBAR --%>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
             <div class="container">
                 <a class="navbar-brand" href="/">JWP WebShop</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -24,15 +25,6 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle custom-underline" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                Categories
-                            </a>
-                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <li><a class="dropdown-item" href="#">Action</a></li>
-                                <li><a class="dropdown-item" href="#">Another action</a></li>
-                            </ul>
-                        </li>
                     </ul>
                     <ul class="navbar-nav me-end mb-2 mb-lg-0">
                         <li class="nav-itemw mx-2">
@@ -56,15 +48,22 @@
                                     <c:choose>
                                     <c:when test="${user.userType.type eq 'Admin'}" >
                                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                            <li><a class="dropdown-item" href="/UserHistory">User history</a></li>
+                                            <h5 class="dropdown-header">User management</h5>
+                                            <li><a class="dropdown-item" href="/UserHistory">History</a></li>
+                                            <div class="dropdown-divider"></div>
+                                            <h5 class="dropdown-header">Webshop management</h5>
                                             <li><a class="dropdown-item" href="#">Purchase history</a></li>
-                                            <li><a class="dropdown-item" href="#">Product management</a></li>
+                                            <div class="dropdown-divider"></div>
+                                            <h5 class="dropdown-header">Product management</h5>
+                                            <li><a class="dropdown-item" href="#">Product</a></li>
+                                            <li><a class="dropdown-item" href="#">Product category</a></li>
                                             <div class="dropdown-divider"></div>
                                             <li><a class="dropdown-item text-danger" href="/Logout">Log out</a></li>
                                         </ul>
                                     </c:when>
                                     <c:otherwise>
                                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                            <h5 class="dropdown-header">User information</h5>
                                             <li><a class="dropdown-item" href="#">Completed purchases</a></li>
                                             <div class="dropdown-divider"></div>
                                             <li><a class="dropdown-item text-danger" href="/Logout">Log out</a></li>
