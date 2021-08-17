@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package hr.algebra.model;
 
 import java.io.Serializable;
@@ -10,6 +5,8 @@ import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -29,6 +26,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Product.findAll", query = "SELECT p FROM Product p")
+    , @NamedQuery(name = "Product.findAllAvailable", query = "SELECT p FROM Product p WHERE p.quantity > 0")
     , @NamedQuery(name = "Product.findById", query = "SELECT p FROM Product p WHERE p.id = :id")
     , @NamedQuery(name = "Product.findByName", query = "SELECT p FROM Product p WHERE p.name = :name")
     , @NamedQuery(name = "Product.findByDescription", query = "SELECT p FROM Product p WHERE p.description = :description")
@@ -38,7 +36,12 @@ import javax.xml.bind.annotation.XmlTransient;
 public class Product implements Serializable {
 
     private static final long serialVersionUID = 1L;
+    
+    public static final String FIND_ALL_QUERY = "Product.findAll";
+    public static final String FIND_ALL_AVAILABLE_QUERY = "Product.findAllAvailable";
+    
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "ID")
     private Integer id;
@@ -50,14 +53,14 @@ public class Product implements Serializable {
     @Column(name = "SKU")
     private String sku;
     @Column(name = "Price")
-    private Long price;
+    private Double price;
     @Column(name = "Quantity")
     private Integer quantity;
-    @OneToMany(mappedBy = "productID")
+    @OneToMany(mappedBy = "product")
     private List<OrderItem> orderItemList;
     @JoinColumn(name = "CategoryID", referencedColumnName = "ID")
     @ManyToOne
-    private ProductCategory categoryID;
+    private ProductCategory category;
 
     public Product() {
     }
@@ -69,6 +72,25 @@ public class Product implements Serializable {
     public Product(Integer id, String name) {
         this.id = id;
         this.name = name;
+    }
+
+    public Product(String name, String description, String sku, Double price, Integer quantity, ProductCategory category) {
+        this.name = name;
+        this.description = description;
+        this.sku = sku;
+        this.price = price;
+        this.quantity = quantity;
+        this.category = category;
+    }
+
+    public Product(Integer id, String name, String description, String sku, Double price, Integer quantity, ProductCategory category) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.sku = sku;
+        this.price = price;
+        this.quantity = quantity;
+        this.category = category;
     }
 
     public Integer getId() {
@@ -103,11 +125,11 @@ public class Product implements Serializable {
         this.sku = sku;
     }
 
-    public Long getPrice() {
+    public Double getPrice() {
         return price;
     }
 
-    public void setPrice(Long price) {
+    public void setPrice(Double price) {
         this.price = price;
     }
 
@@ -128,12 +150,12 @@ public class Product implements Serializable {
         this.orderItemList = orderItemList;
     }
 
-    public ProductCategory getCategoryID() {
-        return categoryID;
+    public ProductCategory getCategory() {
+        return category;
     }
 
-    public void setCategoryID(ProductCategory categoryID) {
-        this.categoryID = categoryID;
+    public void setCategory(ProductCategory category) {
+        this.category = category;
     }
 
     @Override
@@ -160,5 +182,4 @@ public class Product implements Serializable {
     public String toString() {
         return "hr.algebra.model.Product[ id=" + id + " ]";
     }
-    
 }

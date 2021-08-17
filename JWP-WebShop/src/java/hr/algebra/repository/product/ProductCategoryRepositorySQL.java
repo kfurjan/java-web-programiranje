@@ -1,6 +1,6 @@
 package hr.algebra.repository.product;
 
-import hr.algebra.model.Product;
+import hr.algebra.model.ProductCategory;
 import hr.algebra.util.EntityManagerSingleton;
 import java.util.Collections;
 import java.util.List;
@@ -11,22 +11,22 @@ import javax.persistence.TypedQuery;
  *
  * @author Kevin
  */
-public class ProductRepositorySQL implements ProductRepository {
+public class ProductCategoryRepositorySQL implements ProductCategoryRepository {
 
     /**
-     * Creates new Product
+     * Create ProductCategory, for example in database.
      * 
-     * @param product
-     * @return true if successful
+     * @param productCategory
+     * @return true if successfully created ProductCategory.
      */
     @Override
-    public boolean createProduct(Product product) {
+    public boolean createProductCategory(ProductCategory productCategory) {
         
         try {
             EntityManager entityManager = EntityManagerSingleton.getInstance();
             
             entityManager.getTransaction().begin();
-            entityManager.persist(product);
+            entityManager.persist(productCategory);
             entityManager.getTransaction().commit();
             
             return true;
@@ -37,19 +37,19 @@ public class ProductRepositorySQL implements ProductRepository {
     }
     
     /**
-     * Update Product
+     * Update ProductCategory, for example in database.
      * 
-     * @param product
-     * @return true if successful
+     * @param productCategory
+     * @return true if successfully updated ProductCategory.
      */
     @Override
-    public boolean updateProduct(Product product) {
-    
+    public boolean updateProductCategory(ProductCategory productCategory) {
+        
         try {
             EntityManager entityManager = EntityManagerSingleton.getInstance();
             
             entityManager.getTransaction().begin();
-            entityManager.merge(product);
+            entityManager.merge(productCategory);
             entityManager.getTransaction().commit();
             
             return true;
@@ -60,21 +60,22 @@ public class ProductRepositorySQL implements ProductRepository {
     }
 
     /**
-     * Delete Product
+     * Delete ProductCategory, for example in database.
      * 
-     * @param product
-     * @return true if successful
+     * @param productCategory
+     * @return true if successfully deleted ProductCategory.
      */
     @Override
-    public boolean deleteProduct(Product product) {
+    public boolean deleteProductCategory(ProductCategory productCategory) {
+        
         try {
             EntityManager entityManager = EntityManagerSingleton.getInstance();
             
             entityManager.getTransaction().begin();
             entityManager.remove(
-                entityManager.contains(product) 
-                        ? product 
-                        : entityManager.merge(product)
+                entityManager.contains(productCategory) 
+                        ? productCategory 
+                        : entityManager.merge(productCategory)
             );
             entityManager.getTransaction().commit();
             
@@ -86,39 +87,19 @@ public class ProductRepositorySQL implements ProductRepository {
     }
 
     /**
-     * Get all saved products.
+     * Get all ProductCategory, for example from database.
      * 
-     * @return list of products
+     * @return list of all ProductCategory
      */
     @Override
-    public List<Product> getAllProducts() {
+    public List<ProductCategory> getAllProductCategories() {
         
         try {
             EntityManager entityManager = EntityManagerSingleton.getInstance();
             
-            
-            TypedQuery<Product> query = entityManager.createNamedQuery(
-                Product.FIND_ALL_QUERY,
-                Product.class
-            );
-            
-            return query.getResultList();
-        } catch (Exception e) {
-            e.printStackTrace();
-            return Collections.emptyList();
-        }
-    }
-
-    @Override
-    public List<Product> getAllAvailableProducts() {
-        
-        try {
-            EntityManager entityManager = EntityManagerSingleton.getInstance();
-            
-            
-            TypedQuery<Product> query = entityManager.createNamedQuery(
-                Product.FIND_ALL_AVAILABLE_QUERY,
-                Product.class
+            TypedQuery<ProductCategory> query = entityManager.createNamedQuery(
+                ProductCategory.FIND_ALL_QUERY,
+                ProductCategory.class
             );
             
             return query.getResultList();

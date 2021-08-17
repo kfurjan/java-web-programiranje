@@ -1,14 +1,14 @@
 package hr.algebra.servlet;
 
 import hr.algebra.model.ProductCategory;
-import hr.algebra.repository.product.ProductRepository;
-import hr.algebra.repository.product.ProductRepositoryFactory;
+import hr.algebra.repository.product.ProductCategoryRepositoryFactory;
 import hr.algebra.util.Strings;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import hr.algebra.repository.product.ProductCategoryRepository;
 
 /**
  *
@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class ProductCategoryServlet extends HttpServlet {
     
-    private final ProductRepository productRepository = ProductRepositoryFactory.getRepository();
+    private final ProductCategoryRepository productCategoryRepository = ProductCategoryRepositoryFactory.getRepository();
 
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -31,7 +31,7 @@ public class ProductCategoryServlet extends HttpServlet {
             throws ServletException, IOException {
         request.setAttribute(
             Strings.PRODUCT_CATEGORY_KEY,
-            productRepository.getAllProductCategories()
+            productCategoryRepository.getAllProductCategories()
         );
         request.getRequestDispatcher(Strings.PRODUCT_CATEGORY_ENDPOINT).forward(request, response);
     }
@@ -112,7 +112,7 @@ public class ProductCategoryServlet extends HttpServlet {
         String description,
         HttpServletRequest request
     ) {
-        boolean createSuccessful = productRepository.createProductCategory(
+        boolean createSuccessful = productCategoryRepository.createProductCategory(
             new ProductCategory(
                 name,
                 description
@@ -140,7 +140,7 @@ public class ProductCategoryServlet extends HttpServlet {
      * @param request 
      */
     private void updateProductCategory(ProductCategory productCategory, HttpServletRequest request) {
-        boolean updateSuccessful = productRepository.updateProductCategory(productCategory);
+        boolean updateSuccessful = productCategoryRepository.updateProductCategory(productCategory);
 
         if (updateSuccessful) {
             request.getSession().setAttribute(
@@ -163,7 +163,7 @@ public class ProductCategoryServlet extends HttpServlet {
      * @param request 
      */
     private void deleteProductCategory(ProductCategory productCategory, HttpServletRequest request) {
-        boolean deleteSuccessful = productRepository.deleteProductCategory(productCategory);
+        boolean deleteSuccessful = productCategoryRepository.deleteProductCategory(productCategory);
 
         if (deleteSuccessful) {
             request.getSession().setAttribute(

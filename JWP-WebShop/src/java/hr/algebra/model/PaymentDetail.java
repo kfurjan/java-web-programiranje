@@ -44,7 +44,7 @@ public class PaymentDetail implements Serializable {
     @Column(name = "CreatedAt")
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdAt;
-    @OneToMany(mappedBy = "paymentID")
+    @OneToMany(mappedBy = "payment")
     private List<OrderDetail> orderDetailList;
     @JoinColumn(name = "PaymentMethodID", referencedColumnName = "ID")
     @ManyToOne

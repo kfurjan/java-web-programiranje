@@ -55,8 +55,8 @@
                                             <li><a class="dropdown-item" href="#">Purchase history</a></li>
                                             <div class="dropdown-divider"></div>
                                             <h5 class="dropdown-header">Product management</h5>
-                                            <li><a class="dropdown-item" href="#">Product</a></li>
-                                            <li><a class="dropdown-item" href="#">Product category</a></li>
+                                            <li><a class="dropdown-item" href="/Product">Product</a></li>
+                                            <li><a class="dropdown-item" href="/ProductCategory">Product category</a></li>
                                             <div class="dropdown-divider"></div>
                                             <li><a class="dropdown-item text-danger" href="/Logout">Log out</a></li>
                                         </ul>
@@ -78,7 +78,6 @@
             </div>
         </nav>
 
-        
          <div class="container p-5">
              <div class="row justify-content-center">
                 <table id="userHistoryTable" class="table table-striped table-borderless table-hover">

@@ -39,10 +39,10 @@ public class OrderItem implements Serializable {
     private Integer quantity;
     @JoinColumn(name = "OrderID", referencedColumnName = "ID")
     @ManyToOne
-    private OrderDetail orderID;
+    private OrderDetail order;
     @JoinColumn(name = "ProductID", referencedColumnName = "ID")
     @ManyToOne
-    private Product productID;
+    private Product product;
 
     public OrderItem() {
     }
@@ -67,20 +67,20 @@ public class OrderItem implements Serializable {
         this.quantity = quantity;
     }
 
-    public OrderDetail getOrderID() {
-        return orderID;
+    public OrderDetail getOrder() {
+        return order;
     }
 
-    public void setOrderID(OrderDetail orderID) {
-        this.orderID = orderID;
+    public void setOrder(OrderDetail order) {
+        this.order = order;
     }
 
-    public Product getProductID() {
-        return productID;
+    public Product getProduct() {
+        return product;
     }
 
-    public void setProductID(Product productID) {
-        this.productID = productID;
+    public void setProduct(Product product) {
+        this.product = product;
     }
 
     @Override

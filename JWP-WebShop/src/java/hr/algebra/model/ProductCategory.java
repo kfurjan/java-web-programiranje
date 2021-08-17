@@ -42,7 +42,7 @@ public class ProductCategory implements Serializable {
     private String name;
     @Column(name = "Description")
     private String description;
-    @OneToMany(mappedBy = "categoryID")
+    @OneToMany(mappedBy = "category")
     private List<Product> productList;
 
     public ProductCategory() {
@@ -123,6 +123,6 @@ public class ProductCategory implements Serializable {
 
     @Override
     public String toString() {
-        return "hr.algebra.model.ProductCategory[ id=" + id + " ]";
+        return this.name;
     }
 }

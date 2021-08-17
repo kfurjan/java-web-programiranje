@@ -1,7 +1,10 @@
 package hr.algebra.servlet;
 
+import hr.algebra.repository.product.ProductRepository;
+import hr.algebra.repository.product.ProductRepositoryFactory;
 import hr.algebra.util.Strings;
 import java.io.IOException;
+import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -11,7 +14,9 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Kevin
  */
-public class LogOutServlet extends HttpServlet {
+public class HomeServlet extends HttpServlet {
+
+    private final ProductRepository productRepository = ProductRepositoryFactory.getRepository();
 
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -24,9 +29,10 @@ public class LogOutServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.getSession().setAttribute(Strings.USER_KEY, null);
-        request.getSession().setAttribute(Strings.PRODUCT_KEY, null);
-        request.getSession().setAttribute(Strings.PRODUCT_CATEGORY_KEY, null);
+        request.getSession().setAttribute(
+            Strings.AVAILABLE_PRODUCT_KEY,
+            productRepository.getAllProducts()
+        );
         response.sendRedirect(Strings.HOME_ENDPOINT);
     }
 
@@ -41,9 +47,5 @@ public class LogOutServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.getSession().setAttribute(Strings.USER_KEY, null);
-        request.getSession().setAttribute(Strings.PRODUCT_KEY, null);
-        request.getSession().setAttribute(Strings.PRODUCT_CATEGORY_KEY, null);
-        response.sendRedirect(Strings.HOME_ENDPOINT);
     }
 }

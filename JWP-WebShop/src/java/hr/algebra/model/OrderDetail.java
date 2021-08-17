@@ -42,11 +42,11 @@ public class OrderDetail implements Serializable {
     private Long totalPrice;
     @JoinColumn(name = "PaymentID", referencedColumnName = "ID")
     @ManyToOne
-    private PaymentDetail paymentID;
+    private PaymentDetail payment;
     @JoinColumn(name = "UserID", referencedColumnName = "ID")
     @ManyToOne
-    private User userID;
-    @OneToMany(mappedBy = "orderID")
+    private User user;
+    @OneToMany(mappedBy = "order")
     private List<OrderItem> orderItemList;
 
     public OrderDetail() {
@@ -72,20 +72,20 @@ public class OrderDetail implements Serializable {
         this.totalPrice = totalPrice;
     }
 
-    public PaymentDetail getPaymentID() {
-        return paymentID;
+    public PaymentDetail getPayment() {
+        return payment;
     }
 
-    public void setPaymentID(PaymentDetail paymentID) {
-        this.paymentID = paymentID;
+    public void setPayment(PaymentDetail payment) {
+        this.payment = payment;
     }
 
-    public User getUserID() {
-        return userID;
+    public User getUser() {
+        return user;
     }
 
-    public void setUserID(User userID) {
-        this.userID = userID;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     @XmlTransient

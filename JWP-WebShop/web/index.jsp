@@ -52,10 +52,10 @@
                                             <li><a class="dropdown-item" href="/UserHistory">History</a></li>
                                             <div class="dropdown-divider"></div>
                                             <h5 class="dropdown-header">Webshop management</h5>
-                                            <li><a class="dropdown-item" href="#">Purchase history</a></li>
+                                            <li><a class="dropdown-item" href="/PurchaseHistory">Purchase history</a></li>
                                             <div class="dropdown-divider"></div>
                                             <h5 class="dropdown-header">Product management</h5>
-                                            <li><a class="dropdown-item" href="#">Product</a></li>
+                                            <li><a class="dropdown-item" href="/Product">Product</a></li>
                                             <li><a class="dropdown-item" href="/ProductCategory">Product category</a></li>
                                             <div class="dropdown-divider"></div>
                                             <li><a class="dropdown-item text-danger" href="/Logout">Log out</a></li>
@@ -78,6 +78,116 @@
             </div>
         </nav>
         
+        <div class="container p-5">
+             <div class="row justify-content-center">
+                <table id="productTable" class="table table-striped table-borderless table-hover">
+                    <thead>
+                      <tr>
+                        <th scope="col">Name</th>
+                        <th scope="col">Description</th>
+                        <th scope="col">Quantity</th>
+                        <th scope="col">Category</th>
+                        <th scope="col">Price (kn)</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                    <c:if test="${not empty availableProducts}"> 
+                        <c:forEach items="${availableProducts}" var="product">
+                            <tr>
+                                <td data-product-id="${product.id}">${product.name}</td>
+                                <td>${product.description}</td>
+                                <td>${product.quantity}</td>
+                                <td data-category-id="${product.category.id}">${product.category}</td>
+                                <td>${product.price}</td>
+                            </tr>
+                        </c:forEach>
+                    </c:if>
+                    </tbody>
+                  </table>
+             </div>
+         </div>
+        
+        <!-- Modal - Order product -->
+        <div id="orderProductModal" class="modal fade" tabindex="-1" aria-labelledby="orderProductModal" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Order product</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                  <form id="orderProductForm">
+                    <div class="mb-3">
+                      <label for="productName" class="form-label">Product name</label>
+                      <input type="text" class="form-control" id="productName" name="productName" disabled>
+                    </div>
+                    <div class="mb-3">
+                      <label for="productDesc" class="form-label">Product description</label>
+                      <input type="text" class="form-control" id="productDesc" name="productDesc" disabled>
+                    </div>
+                    <div class="mb-3">
+                      <label for="productTotalQuantity" class="form-label">Product total quantity</label>
+                      <input type="text" class="form-control" id="productTotalQuantity" name="productTotalQuantity" disabled>
+                    </div>
+                    <div class="mb-3">
+                      <label for="productCategory" class="form-label">Product category</label>
+                      <input type="text" class="form-control" id="productCategory" name="productCategory" disabled>
+                    </div>
+                    <div class="mb-3">
+                      <label for="productPrice" class="form-label">Product price (kn)</label>
+                      <input type="text" class="form-control" id="productPrice" name="productPrice" disabled>
+                    </div>
+                    <div class="mb-3">
+                      <label for="productQuantityToOrder" class="form-label">Quantity to order</label>
+                      <input type="text" class="form-control" id="productQuantityToOrder" name="productQuantityToOrder">
+                    </div>
+                  </form>
+              </div>
+              <div class="modal-footer">
+                <button id="btnOrderProduct" name="btnOrderProduct" type="button" class="btn btn-outline-primary" value="btnOrderProduct_clicked">Order</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        
         <jwp:js-tag/>
+        <script>
+            $(function() {
+                // show table
+                let table = $('#productTable').DataTable();
+                
+                // table on click listeners
+                $('#productTable tbody').on( 'click', 'tr', function () {
+                    if ($(this).hasClass('selected')) {
+                        $(this).removeClass('selected');
+                    } else {
+                        table.$('tr.selected').removeClass('selected');
+                        $(this).addClass('selected');
+                                                
+                        let dataRow = $(this).find("td").map(function() {
+                            return $(this).html();
+                        });
+                        let productId = $(this).find("td[data-product-id]").map(function() {
+                            return $(this).data("product-id");
+                        });
+                        let categoryId = $(this).find("td[data-category-id]").map(function() {
+                            return $(this).data("category-id");
+                        });
+                        console.log(productId[0]);
+                        console.log(categoryId[0]);
+                        
+                        $('#productName').val(dataRow[0]);
+                        $('#productDesc').val(dataRow[1]);
+                        $('#productTotalQuantity').val(dataRow[2]);
+                        $('#productCategory').val(dataRow[3]);
+                        $('#productPrice').val(dataRow[4]);
+                        
+                        new bootstrap.Modal(
+                            document.getElementById('orderProductModal')
+                        ).show();
+                    }
+                });
+            });
+        </script>
     </body>
 </html>

@@ -52,7 +52,7 @@ public class User implements Serializable {
     private String firstName;
     @Column(name = "LastName")
     private String lastName;
-    @OneToMany(mappedBy = "userID")
+    @OneToMany(mappedBy = "user")
     private List<OrderDetail> orderDetailList;
     @OneToMany(mappedBy = "user")
     private List<UserHistory> userHistoryList;

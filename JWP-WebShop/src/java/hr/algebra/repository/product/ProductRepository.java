@@ -1,6 +1,6 @@
 package hr.algebra.repository.product;
 
-import hr.algebra.model.ProductCategory;
+import hr.algebra.model.Product;
 import java.util.List;
 
 /**
@@ -10,33 +10,40 @@ import java.util.List;
 public interface ProductRepository {
     
     /**
-     * Create ProductCategory, for example in database.
+     * Creates new Product
      * 
-     * @param productCategory
-     * @return true if successfully created ProductCategory.
+     * @param product
+     * @return true if successful
      */
-    public boolean createProductCategory(ProductCategory productCategory);
+    public boolean createProduct(Product product);
     
     /**
-     * Update ProductCategory, for example in database.
+     * Update Product
      * 
-     * @param productCategory
-     * @return true if successfully updated ProductCategory.
+     * @param product
+     * @return true if successful
      */
-    public boolean updateProductCategory(ProductCategory productCategory);
+    public boolean updateProduct(Product product);
+
+    /**
+     * Delete Product
+     * 
+     * @param product
+     * @return true if successful
+     */
+    public boolean deleteProduct(Product product);
     
     /**
-     * Delete ProductCategory, for example in database.
+     * Get all saved products.
      * 
-     * @param productCategory
-     * @return true if successfully deleted ProductCategory.
+     * @return list of products
      */
-    public boolean deleteProductCategory(ProductCategory productCategory);
+    public List<Product> getAllProducts();
     
     /**
-     * Get all ProductCategory, for example from database.
+     * Get all saved products that have quantity greater than 0.
      * 
-     * @return list of all ProductCategory
+     * @return list of products
      */
-    public List<ProductCategory> getAllProductCategories();
+    public List<Product> getAllAvailableProducts();
 }

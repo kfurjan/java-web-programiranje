@@ -55,7 +55,7 @@
                                             <li><a class="dropdown-item" href="#">Purchase history</a></li>
                                             <div class="dropdown-divider"></div>
                                             <h5 class="dropdown-header">Product management</h5>
-                                            <li><a class="dropdown-item" href="#">Product</a></li>
+                                            <li><a class="dropdown-item" href="/Product">Product</a></li>
                                             <li><a class="dropdown-item" href="/ProductCategory">Product category</a></li>
                                             <div class="dropdown-divider"></div>
                                             <li><a class="dropdown-item text-danger" href="/Logout">Log out</a></li>
@@ -116,7 +116,7 @@
              </div>
          </div>
 
-        <!-- Modal - Create new category-->
+        <!-- Modal - Create new category -->
         <div id="createProductCategory" class="modal fade" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
           <div class="modal-dialog">
             <div class="modal-content">
@@ -142,7 +142,6 @@
             </div>
           </div>
         </div>
-        
         
         <!-- Modal - Update/Delete category-->
         <div id="updateDeleteProductCategory" class="modal fade" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -178,7 +177,7 @@
         
         <jwp:js-tag/>
         <script>
-            $(function(){
+            $(function() {
                 // show table
                 let table = $('#productCategoryTable').DataTable();
                 
@@ -226,7 +225,7 @@
                 });
                 
                 // update category
-                $('#btnUpdateProductCategory').on("click", function(e){
+                $('#btnUpdateProductCategory').on("click", function(e) {
                     e.preventDefault();
                     $.ajax({
                         url: 'ProductCategory',
@@ -244,7 +243,7 @@
                 });
                
                 // delete category
-                $('#btnDeleteProductCategory').on("click", function(e){
+                $('#btnDeleteProductCategory').on("click", function(e) {
                     e.preventDefault();
                     $.ajax({
                         url: 'ProductCategory',
