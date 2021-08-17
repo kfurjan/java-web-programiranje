@@ -6,10 +6,13 @@
 package hr.algebra.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -35,11 +38,12 @@ public class OrderDetail implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "ID")
     private Integer id;
     @Column(name = "TotalPrice")
-    private Long totalPrice;
+    private Double totalPrice;
     @JoinColumn(name = "PaymentID", referencedColumnName = "ID")
     @ManyToOne
     private PaymentDetail payment;
@@ -47,9 +51,11 @@ public class OrderDetail implements Serializable {
     @ManyToOne
     private User user;
     @OneToMany(mappedBy = "order")
-    private List<OrderItem> orderItemList;
+    private List<OrderItem> orderItems;
 
     public OrderDetail() {
+        this.totalPrice = 0.0;
+        this.orderItems = new ArrayList<>();
     }
 
     public OrderDetail(Integer id) {
@@ -64,11 +70,11 @@ public class OrderDetail implements Serializable {
         this.id = id;
     }
 
-    public Long getTotalPrice() {
+    public Double getTotalPrice() {
         return totalPrice;
     }
 
-    public void setTotalPrice(Long totalPrice) {
+    public void setTotalPrice(Double totalPrice) {
         this.totalPrice = totalPrice;
     }
 
@@ -89,12 +95,12 @@ public class OrderDetail implements Serializable {
     }
 
     @XmlTransient
-    public List<OrderItem> getOrderItemList() {
-        return orderItemList;
+    public List<OrderItem> getOrderItems() {
+        return orderItems;
     }
 
-    public void setOrderItemList(List<OrderItem> orderItemList) {
-        this.orderItemList = orderItemList;
+    public void setOrderItems(List<OrderItem> orderItems) {
+        this.orderItems = orderItems;
     }
 
     @Override

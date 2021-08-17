@@ -25,6 +25,7 @@ public class LogOutServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         request.getSession().setAttribute(Strings.USER_KEY, null);
+        request.getSession().setAttribute(Strings.CART_KEY, null);
         request.getSession().setAttribute(Strings.PRODUCT_KEY, null);
         request.getSession().setAttribute(Strings.PRODUCT_CATEGORY_KEY, null);
         response.sendRedirect(Strings.HOME_ENDPOINT);
@@ -42,6 +43,7 @@ public class LogOutServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         request.getSession().setAttribute(Strings.USER_KEY, null);
+        request.getSession().setAttribute(Strings.CART_KEY, null);
         request.getSession().setAttribute(Strings.PRODUCT_KEY, null);
         request.getSession().setAttribute(Strings.PRODUCT_CATEGORY_KEY, null);
         response.sendRedirect(Strings.HOME_ENDPOINT);

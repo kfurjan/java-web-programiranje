@@ -39,10 +39,28 @@ public class Strings {
     public static final String CATEGORY_DESCRIPTION_CREATE = "categoryDescriptionCreate";
     public static final String CATEGORY_DESCRIPTION_UPDATE_DELETE = "categoryDescriptionUpdateDelete";
     
+    public static final String PRODUCT_ID_ORDER = "productIdOrder";
+    public static final String PRODUCT_NAME_ORDER = "productNameOrder";
+    public static final String PRODUCT_DESC_ORDER = "productDescriptionOrder";
+    public static final String PRODUCT_SKU_ORDER = "productSkuOrder";
+    public static final String PRODUCT_TOTAL_QUANTITY_ORDER = "productTotalQuantityOrder";
+    public static final String PRODUCT_CATEGORY_ORDER = "productCategoryOrder";
+    public static final String PRODUCT_CATEGORY_ID_ORDER = "productCategoryIdOrder";
+    public static final String PRODUCT_PRICE_ORDER = "productPriceOrder";
+    public static final String PRODUCT_QUANTITY_TO_ORDER = "productQuantityToOrder";
+    public static final String BUTTON_ORDER_PRODUCT = "btnOrderProduct";
+
+    public static final String PRODUCT_ID_CART = "productIdCart";
+    public static final String BUTTON_UPDATE_PRODUCT_CART = "btnUpdateCartItem";
+    public static final String BUTTON_DELETE_PRODUCT_CART = "btnDeleteCartItem";
+    
     // request, session keys
     public static final String USER_KEY = "user";
+    public static final String CART_KEY = "cart";
     public static final String PRODUCT_KEY = "products";
     public static final String AVAILABLE_PRODUCT_KEY = "availableProducts";
+    public static final String HOME_ERROR_MESSAGE_KEY = "homeErrorMessage";
+    public static final String CART_ERROR_MESSAGE_KEY = "cartErrorMessage";
     public static final String USER_HISTORY_KEY = "userHistory";
     public static final String ERROR_MESSAGE_KEY = "errorMessage";
     public static final String PRODUCT_CATEGORY_KEY = "productCategory";
@@ -61,6 +79,7 @@ public class Strings {
     public static final String ERROR_WHILE_CREATING_PRODUCT_CATEGORY = "An error occured while creating new product category!";
     public static final String ERROR_WHILE_UPDATING_PRODUCT_CATEGORY = "An error occured while updating product category!";
     public static final String ERROR_WHILE_DELETING_PRODUCT_CATEGORY = "An error occured while deleting product category!";
+    public static final String ERROR_WITH_ORDER_QUANTITY = "Order quantity cannot be greater than total quantity of the product!";
     
     // application constants
     public static final String EMPTY_STRING = "";
@@ -70,6 +89,7 @@ public class Strings {
     
     // application endpoints
     public static final String HOME_ENDPOINT = "/";
+    public static final String CART_ENDPOINT = "/cart.jsp";
     public static final String LOGIN_ENDPOINT = "/login.jsp";
     public static final String PRODUCT_ENDPOINT = "/product.jsp";
     public static final String REGISTER_ENDPOINT = "/register.jsp";

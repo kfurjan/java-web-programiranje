@@ -1,6 +1,6 @@
 <%-- 
-    Document   : productCategory
-    Created on : 12.08.2021., 18:05:27
+    Document   : cart
+    Created on : 17.08.2021., 18:53:00
     Author     : Kevin
 --%>
 
@@ -11,8 +11,8 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Product category</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Cart</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <jwp:css-tag/>
     </head>
     <body>
@@ -88,98 +88,87 @@
         </nav>
         
         <div class="container p-5">
-            <div class="row justify-content-center">
-                <!-- Button trigger modal -->
-                <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#createProductCategory">
-                    Create new product category
-                </button>
-                
-                <c:if test="${not empty productCategoryErrorMessage}">
-                    <div class="alert alert-danger mt-3 alert-dismissible fade show" role="alert">
-                        ${productCategoryErrorMessage}
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                    </div>
-                </c:if>
-            </div>
-        </div>
-        
-        <div class="container p-5">
              <div class="row justify-content-center">
-                <table id="productCategoryTable" class="table table-striped table-borderless table-hover">
+                <c:if test="${not empty cartErrorMessage}">
+                   <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        ${cartErrorMessage}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                   </div>
+                </c:if>
+                <table id="cartTable" class="table table-striped table-borderless table-hover">
                     <thead>
                       <tr>
-                        <th scope="col">#</th>
                         <th scope="col">Name</th>
                         <th scope="col">Description</th>
+                        <th scope="col">Category</th>
+                        <th scope="col">Order quantity</th>
+                        <th scope="col">Price (kn)</th>
+                        <th scope="col">Total (kn)</th>
                       </tr>
                     </thead>
                     <tbody>
-                    <c:forEach items="${productCategory}" var="category">
-                        <tr>
-                            <td scope="row">${category.id}</td>
-                            <td>${category.name}</td>
-                            <td>${category.description}</td>
-                        </tr>
-                    </c:forEach>
+                    <c:if test="${not empty cart}"> 
+                        <c:forEach items="${cart.orderItems}" var="orderItem">
+                            <tr>
+                                <td data-product-id="${orderItem.product.id}">${orderItem.product.name}</td>
+                                <td data-sku="${orderItem.product.sku}">${orderItem.product.description}</td>
+                                <td data-category-id="${orderItem.product.category.id}">${orderItem.product.category}</td>
+                                <td data-product-quantity="${orderItem.product.quantity}">${orderItem.quantity}</td>
+                                <td>${orderItem.product.price}</td>
+                                <td>${orderItem.quantity * orderItem.product.price}</td>
+                            </tr>
+                        </c:forEach>
+                    </c:if>
                     </tbody>
                   </table>
+                 <div class="p-3 d-flex justify-content-end">
+                     <h4>
+                         Total price: <b>${cart.totalPrice} kn</b>
+                     </h4>
+                 </div>
+                 <div class="d-flex justify-content-center">
+                     <div class="d-grid gap-2 col-2 mx-auto">
+                        <button type="button" class="btn btn-outline-primary btn-lg">Buy</button>
+                    </div>
+                 </div>
              </div>
          </div>
-
-        <!-- Modal - Create new category -->
-        <div id="createProductCategory" class="modal fade" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                     
+         <!-- Modal - Order product -->
+        <div id="cartModal" class="modal fade" tabindex="-1" aria-labelledby="cartModal" aria-hidden="true">
           <div class="modal-dialog">
             <div class="modal-content">
               <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Create new product category</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Order product</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
               <div class="modal-body">
-                  <form id="createProductCategoryForm">
+                  <form id="orderProductForm">
                     <div class="mb-3">
-                      <label for="categoryNameCreate" class="form-label">Category name</label>
-                      <input type="text" class="form-control" id="categoryNameCreate" name="categoryNameCreate">
+                      <label for="productName" class="form-label">Product name</label>
+                      <input type="text" class="form-control" id="productName" name="productName" disabled>
                     </div>
                     <div class="mb-3">
-                      <label for="categoryDescriptionCreate" class="form-label">Category description</label>
-                      <input type="text" class="form-control" id="categoryDescriptionCreate" name="categoryDescriptionCreate">
+                      <label for="productDesc" class="form-label">Product description</label>
+                      <input type="text" class="form-control" id="productDesc" name="productDesc" disabled>
+                    </div>
+                    <div class="mb-3">
+                      <label for="productCategory" class="form-label">Product category</label>
+                      <input type="text" class="form-control" id="productCategory" name="productCategory" disabled>
+                    </div>
+                    <div class="mb-3">
+                      <label for="productPrice" class="form-label">Product price (kn)</label>
+                      <input type="text" class="form-control" id="productPrice" name="productPrice" disabled>
+                    </div>
+                    <div class="mb-3">
+                      <label for="productQuantityToOrder" class="form-label">Quantity to order</label>
+                      <input type="number" class="form-control" id="productQuantityToOrder" name="productQuantityToOrder">
                     </div>
                   </form>
               </div>
               <div class="modal-footer">
-                <button id="btnCreateProductCategory" name="btnCreateProductCategory" type="button" class="btn btn-outline-primary" value="btnCreateProductCategory_clicked">Create</button>
-              </div>
-            </div>
-          </div>
-        </div>
-        
-        <!-- Modal - Update/Delete category-->
-        <div id="updateDeleteProductCategory" class="modal fade" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-          <div class="modal-dialog">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Update or delete product category</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-              </div>
-              <div class="modal-body">
-                  <form id="createProductCategoryForm">
-                    <div class="mb-3">
-                      <label for="categoryID" class="form-label">Product category ID</label>
-                      <input type="text" class="form-control" id="categoryID" name="categoryID" disabled>
-                    </div>
-                    <div class="mb-3">
-                      <label for="categoryName" class="form-label">Category name</label>
-                      <input type="text" class="form-control" id="categoryNameUpdateDelete" name="categoryNameUpdateDelete">
-                    </div>
-                    <div class="mb-3">
-                      <label for="categoryDescription" class="form-label">Category description</label>
-                      <input type="text" class="form-control" id="categoryDescriptionUpdateDelete" name="categoryDescriptionUpdateDelete">
-                    </div>
-                  </form>
-              </div>
-              <div class="modal-footer">
-                <button id="btnUpdateProductCategory" type="button" class="btn btn-outline-success">Update</button>
-                <button id="btnDeleteProductCategory" type="button" class="btn btn-outline-danger">Delete</button>
+                <button id="btnUpdateCartItem" name="btnUpdateCartItem" type="button" class="btn btn-outline-success" value="btnUpdateCartItem_clicked">Update</button>
+                <button id="btnDeleteCartItem" name="btnDeleteCartItem" type="button" class="btn btn-outline-danger" value="btnDeleteCartItem_clicked">Delete</button>
               </div>
             </div>
           </div>
@@ -188,84 +177,83 @@
         <jwp:js-tag/>
         <script>
             $(function() {
-                // show table
-                let table = $('#productCategoryTable').DataTable();
-                
-                // create new category
-                $('#btnCreateProductCategory').on("click", function(e){
-                    e.preventDefault();
-                    $.ajax({
-                        url: 'ProductCategory',
-                        type: 'POST', 
-                        data: {
-                            categoryNameCreate: $('#categoryNameCreate').val(),
-                            categoryDescriptionCreate: $('#categoryDescriptionCreate').val(),
-                            btnCreateProductCategory: 'true'
-                        },
-                        success: function () {
-                            location.href = 'ProductCategory';
-                        }
-                    });
-                });
+                let productId, categoryId, sku;
+                let table = $('#cartTable').DataTable();
                 
                 // table on click listeners
-                $('#productCategoryTable tbody').on( 'click', 'tr', function () {
+                $('#cartTable tbody').on( 'click', 'tr', function () {
                     if ($(this).hasClass('selected')) {
                         $(this).removeClass('selected');
-                        
-                        $('#categoryID').val('');
-                        $('#categoryNameUpdateDelete').val('');
-                        $('#categoryDescriptionUpdateDelete').val('');
                     } else {
                         table.$('tr.selected').removeClass('selected');
                         $(this).addClass('selected');
-                        
+                                                
                         let dataRow = $(this).find("td").map(function() {
                             return $(this).html();
                         });
+                        let productIdArray = $(this).find("td[data-product-id]").map(function() {
+                            return $(this).data("product-id");
+                        });
+                        let productTotalQuantityArray = $(this).find("td[data-product-quantity]").map(function() {
+                            return $(this).data("product-quantity");
+                        });
+                        let categoryIdArray = $(this).find("td[data-category-id]").map(function() {
+                            return $(this).data("category-id");
+                        });
+                        let skuArray = $(this).find("td[data-sku]").map(function() {
+                            return $(this).data("sku");
+                        });
                         
-                        $('#categoryID').val(dataRow[0]);
-                        $('#categoryNameUpdateDelete').val(dataRow[1]);
-                        $('#categoryDescriptionUpdateDelete').val(dataRow[2]);
+                        productId  = productIdArray[0];
+                        categoryId = categoryIdArray[0];
+                        sku = skuArray[0];
+                        
+                        $('#productName').val(dataRow[0]);
+                        $('#productDesc').val(dataRow[1]);
+                        $('#productCategory').val(dataRow[2]);
+                        $('#productPrice').val(dataRow[4]);
+                        $('#productQuantityToOrder').val(dataRow[3]);
+                        
+                        $('#productQuantityToOrder').attr({
+                            "max": productTotalQuantityArray[0],
+                            "min": 1
+                         });
                         
                         new bootstrap.Modal(
-                            document.getElementById('updateDeleteProductCategory')
+                            document.getElementById('cartModal')
                         ).show();
                     }
                 });
                 
-                // update category
-                $('#btnUpdateProductCategory').on("click", function(e) {
+                // delete product from cart
+                $('#btnDeleteCartItem').on("click", function(e) {
                     e.preventDefault();
                     $.ajax({
-                        url: 'ProductCategory',
+                        url: 'Cart',
                         type: 'POST', 
                         data: {
-                            categoryID: $('#categoryID').val(),
-                            categoryNameUpdateDelete: $('#categoryNameUpdateDelete').val(),
-                            categoryDescriptionUpdateDelete: $('#categoryDescriptionUpdateDelete').val(),
-                            btnUpdateProductCategory: 'true'
+                            productIdCart: productId,
+                            btnDeleteCartItem: 'true'
                         },
                         success: function () {
-                            location.href = 'ProductCategory';
+                            location.reload();
                         }
                     });
                 });
-               
-                // delete category
-                $('#btnDeleteProductCategory').on("click", function(e) {
+                
+                // update product in cart
+                $('#btnUpdateCartItem').on("click", function(e) {
                     e.preventDefault();
                     $.ajax({
-                        url: 'ProductCategory',
+                        url: 'Cart',
                         type: 'POST', 
                         data: {
-                            categoryID: $('#categoryID').val(),
-                            categoryNameUpdateDelete: $('#categoryNameUpdateDelete').val(),
-                            categoryDescriptionUpdateDelete: $('#categoryDescriptionUpdateDelete').val(),
-                            btnDeleteProductCategory: 'true'
+                            productIdCart: productId,
+                            productQuantityToOrder: $('#productQuantityToOrder').val(),
+                            btnUpdateCartItem: 'true'
                         },
                         success: function () {
-                            location.href = 'ProductCategory';
+                            location.reload();
                         }
                     });
                 });

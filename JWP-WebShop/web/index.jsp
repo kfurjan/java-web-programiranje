@@ -28,9 +28,18 @@
                     </ul>
                     <ul class="navbar-nav me-end mb-2 mb-lg-0">
                         <li class="nav-itemw mx-2">
-                            <a class="nav-link custom-underline active" href="#">
-                                <i class="bi bi-cart2"></i> Cart
-                            </a>
+                            <c:choose>
+                                <c:when test="${cart.orderItems.size() > 0}" >
+                                    <a class="nav-link custom-underline active" href="/Cart">
+                                        <i class="bi bi-cart2"></i> Cart <span class="badge bg-danger">${cart.orderItems.size()}</span>
+                                    </a>
+                                </c:when>
+                                <c:otherwise>
+                                    <a class="nav-link custom-underline active" href="/Cart">
+                                        <i class="bi bi-cart2"></i> Cart
+                                    </a>
+                                </c:otherwise>
+                            </c:choose>
                         </li>
                         <c:choose>
                         <c:when test="${empty user}" >
@@ -80,6 +89,12 @@
         
         <div class="container p-5">
              <div class="row justify-content-center">
+                <c:if test="${not empty homeErrorMessage}">
+                   <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                       ${homeErrorMessage}
+                       <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                   </div>
+                </c:if>
                 <table id="productTable" class="table table-striped table-borderless table-hover">
                     <thead>
                       <tr>
@@ -95,7 +110,7 @@
                         <c:forEach items="${availableProducts}" var="product">
                             <tr>
                                 <td data-product-id="${product.id}">${product.name}</td>
-                                <td>${product.description}</td>
+                                <td data-sku="${product.sku}">${product.description}</td>
                                 <td>${product.quantity}</td>
                                 <td data-category-id="${product.category.id}">${product.category}</td>
                                 <td>${product.price}</td>
@@ -139,7 +154,7 @@
                     </div>
                     <div class="mb-3">
                       <label for="productQuantityToOrder" class="form-label">Quantity to order</label>
-                      <input type="text" class="form-control" id="productQuantityToOrder" name="productQuantityToOrder">
+                      <input type="number" class="form-control" id="productQuantityToOrder" name="productQuantityToOrder">
                     </div>
                   </form>
               </div>
@@ -153,6 +168,8 @@
         <jwp:js-tag/>
         <script>
             $(function() {
+                let productId, categoryId, sku;
+                
                 // show table
                 let table = $('#productTable').DataTable();
                 
@@ -167,14 +184,19 @@
                         let dataRow = $(this).find("td").map(function() {
                             return $(this).html();
                         });
-                        let productId = $(this).find("td[data-product-id]").map(function() {
+                        let productIdArray = $(this).find("td[data-product-id]").map(function() {
                             return $(this).data("product-id");
                         });
-                        let categoryId = $(this).find("td[data-category-id]").map(function() {
+                        let categoryIdArray = $(this).find("td[data-category-id]").map(function() {
                             return $(this).data("category-id");
                         });
-                        console.log(productId[0]);
-                        console.log(categoryId[0]);
+                        let skuArray = $(this).find("td[data-sku]").map(function() {
+                            return $(this).data("sku");
+                        });
+                        
+                        productId  = productIdArray[0];
+                        categoryId = categoryIdArray[0];
+                        sku = skuArray[0];
                         
                         $('#productName').val(dataRow[0]);
                         $('#productDesc').val(dataRow[1]);
@@ -182,10 +204,39 @@
                         $('#productCategory').val(dataRow[3]);
                         $('#productPrice').val(dataRow[4]);
                         
+                        $('#productQuantityToOrder').attr({
+                            "max": dataRow[2],
+                            "min": 1
+                         });
+                        
                         new bootstrap.Modal(
                             document.getElementById('orderProductModal')
                         ).show();
                     }
+                });
+                
+                // order product
+                $('#btnOrderProduct').on("click", function(e) {
+                    e.preventDefault();
+                    $.ajax({
+                        url: 'OrderProduct',
+                        type: 'POST', 
+                        data: {
+                            productIdOrder: productId,
+                            productNameOrder: $('#productName').val(),
+                            productDescriptionOrder: $('#productDesc').val(),
+                            productSkuOrder: sku,
+                            productTotalQuantityOrder: $('#productTotalQuantity').val(),
+                            productCategoryOrder: $('#productCategory').val(),
+                            productCategoryIdOrder: categoryId,
+                            productPriceOrder: $('#productPrice').val(),
+                            productQuantityToOrder: $('#productQuantityToOrder').val(),
+                            btnOrderProduct: 'true'
+                        },
+                        success: function () {
+                            location.reload();
+                        }
+                    });
                 });
             });
         </script>

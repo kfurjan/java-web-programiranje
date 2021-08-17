@@ -28,9 +28,18 @@
                     </ul>
                     <ul class="navbar-nav me-end mb-2 mb-lg-0">
                         <li class="nav-itemw mx-2">
-                            <a class="nav-link custom-underline active" href="#">
-                                <i class="bi bi-cart2"></i> Cart
-                            </a>
+                            <c:choose>
+                                <c:when test="${cart.orderItems.size() > 0}" >
+                                    <a class="nav-link custom-underline active" href="/Cart">
+                                        <i class="bi bi-cart2"></i> Cart <span class="badge bg-danger">${cart.orderItems.size()}</span>
+                                    </a>
+                                </c:when>
+                                <c:otherwise>
+                                    <a class="nav-link custom-underline active" href="/Cart">
+                                        <i class="bi bi-cart2"></i> Cart
+                                    </a>
+                                </c:otherwise>
+                            </c:choose>
                         </li>
                         <c:choose>
                         <c:when test="${empty user}" >
@@ -52,7 +61,7 @@
                                             <li><a class="dropdown-item" href="/UserHistory">History</a></li>
                                             <div class="dropdown-divider"></div>
                                             <h5 class="dropdown-header">Webshop management</h5>
-                                            <li><a class="dropdown-item" href="#">Purchase history</a></li>
+                                            <li><a class="dropdown-item" href="/PurchaseHistory">Purchase history</a></li>
                                             <div class="dropdown-divider"></div>
                                             <h5 class="dropdown-header">Product management</h5>
                                             <li><a class="dropdown-item" href="/Product">Product</a></li>

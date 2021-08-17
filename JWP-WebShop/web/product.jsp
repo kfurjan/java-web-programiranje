@@ -28,9 +28,18 @@
                     </ul>
                     <ul class="navbar-nav me-end mb-2 mb-lg-0">
                         <li class="nav-itemw mx-2">
-                            <a class="nav-link custom-underline active" href="#">
-                                <i class="bi bi-cart2"></i> Cart
-                            </a>
+                            <c:choose>
+                                <c:when test="${cart.orderItems.size() > 0}" >
+                                    <a class="nav-link custom-underline active" href="/Cart">
+                                        <i class="bi bi-cart2"></i> Cart <span class="badge bg-danger">${cart.orderItems.size()}</span>
+                                    </a>
+                                </c:when>
+                                <c:otherwise>
+                                    <a class="nav-link custom-underline active" href="/Cart">
+                                        <i class="bi bi-cart2"></i> Cart
+                                    </a>
+                                </c:otherwise>
+                            </c:choose>
                         </li>
                         <c:choose>
                         <c:when test="${empty user}" >
@@ -45,31 +54,31 @@
                                 <a class="nav-link dropdown-toggle custom-underline" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                     ${user}
                                 </a>
-                                <c:choose>
-                                <c:when test="${user.userType.type eq 'Admin'}" >
-                                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                        <h5 class="dropdown-header">User management</h5>
-                                        <li><a class="dropdown-item" href="/UserHistory">History</a></li>
-                                        <div class="dropdown-divider"></div>
-                                        <h5 class="dropdown-header">Webshop management</h5>
-                                        <li><a class="dropdown-item" href="#">Purchase history</a></li>
-                                        <div class="dropdown-divider"></div>
-                                        <h5 class="dropdown-header">Product management</h5>
-                                        <li><a class="dropdown-item" href="/Product">Product</a></li>
-                                        <li><a class="dropdown-item" href="/ProductCategory">Product category</a></li>
-                                        <div class="dropdown-divider"></div>
-                                        <li><a class="dropdown-item text-danger" href="/Logout">Log out</a></li>
-                                    </ul>
-                                </c:when>
-                                <c:otherwise>
-                                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                        <h5 class="dropdown-header">User information</h5>
-                                        <li><a class="dropdown-item" href="#">Completed purchases</a></li>
-                                        <div class="dropdown-divider"></div>
-                                        <li><a class="dropdown-item text-danger" href="/Logout">Log out</a></li>
-                                    </ul>
-                                </c:otherwise>
-                                </c:choose>
+                                    <c:choose>
+                                    <c:when test="${user.userType.type eq 'Admin'}" >
+                                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                            <h5 class="dropdown-header">User management</h5>
+                                            <li><a class="dropdown-item" href="/UserHistory">History</a></li>
+                                            <div class="dropdown-divider"></div>
+                                            <h5 class="dropdown-header">Webshop management</h5>
+                                            <li><a class="dropdown-item" href="/PurchaseHistory">Purchase history</a></li>
+                                            <div class="dropdown-divider"></div>
+                                            <h5 class="dropdown-header">Product management</h5>
+                                            <li><a class="dropdown-item" href="/Product">Product</a></li>
+                                            <li><a class="dropdown-item" href="/ProductCategory">Product category</a></li>
+                                            <div class="dropdown-divider"></div>
+                                            <li><a class="dropdown-item text-danger" href="/Logout">Log out</a></li>
+                                        </ul>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                            <h5 class="dropdown-header">User information</h5>
+                                            <li><a class="dropdown-item" href="#">Completed purchases</a></li>
+                                            <div class="dropdown-divider"></div>
+                                            <li><a class="dropdown-item text-danger" href="/Logout">Log out</a></li>
+                                        </ul>
+                                    </c:otherwise>
+                                    </c:choose>
                             </li>
                         </c:otherwise>
                         </c:choose>
@@ -86,8 +95,9 @@
                 </button>
                 
                 <c:if test="${not empty productErrorMessage}">
-                    <div class="alert alert-danger mt-3" role="alert">
+                    <div class="alert alert-danger mt-3 alert-dismissible fade show" role="alert">
                         ${productErrorMessage}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
                 </c:if>
             </div>

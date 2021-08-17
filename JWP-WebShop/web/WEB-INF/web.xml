@@ -28,6 +28,14 @@
         <servlet-name>HomeServlet</servlet-name>
         <servlet-class>hr.algebra.servlet.HomeServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>OrderProductServlet</servlet-name>
+        <servlet-class>hr.algebra.servlet.OrderProductServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CartServlet</servlet-name>
+        <servlet-class>hr.algebra.servlet.CartServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoginServlet</servlet-name>
         <url-pattern>/Login</url-pattern>
@@ -55,6 +63,14 @@
     <servlet-mapping>
         <servlet-name>HomeServlet</servlet-name>
         <url-pattern>/</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>OrderProductServlet</servlet-name>
+        <url-pattern>/OrderProduct</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CartServlet</servlet-name>
+        <url-pattern>/Cart</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

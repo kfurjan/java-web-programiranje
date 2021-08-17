@@ -32,8 +32,9 @@
                     <div class="col-md-4 bg-light rounded p-5 border border-info">
                         <h4 class="text-center my-3">Login</h4>
                         <c:if test="${not empty errorMessage}">
-                            <div class="alert alert-danger" role="alert">
+                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
                                 ${errorMessage}
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                             </div>
                          </c:if>
                         <div class="form-group my-3">
