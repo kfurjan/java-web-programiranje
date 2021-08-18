@@ -115,3 +115,13 @@ VALUES
     ('Admin'),
     ('User')
 GO
+
+-- Insert rows into table 'PaymentMethod'
+INSERT INTO PaymentMethod
+( -- columns to insert data into
+ [Name]
+)
+VALUES
+  ('On delivery'),
+  ('PayPal')
+GO

@@ -1,6 +1,8 @@
 package hr.algebra.servlet;
 
 import hr.algebra.model.OrderDetail;
+import hr.algebra.repository.purchase.PurchaseRepository;
+import hr.algebra.repository.purchase.PurchaseRepositoryFactory;
 import hr.algebra.util.Strings;
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -19,6 +21,8 @@ public class CartServlet extends HttpServlet {
     
     private String btnUpdateProduct;
     private String btnDeleteProduct;
+    
+    private static final PurchaseRepository purchaseRepository = PurchaseRepositoryFactory.getRepository();
 
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -31,6 +35,7 @@ public class CartServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        request.getSession().setAttribute(Strings.PAYMENT_METHOD_KEY, purchaseRepository.getAllPaymentMethods());
         response.sendRedirect(Strings.CART_ENDPOINT);
     }
 
@@ -45,8 +50,7 @@ public class CartServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        productId              = Integer.parseInt(request.getParameter(Strings.PRODUCT_ID_CART));
-        productQuantityToOrder = Integer.parseInt(request.getParameter(Strings.PRODUCT_QUANTITY_TO_ORDER));
+        productId = Integer.parseInt(request.getParameter(Strings.PRODUCT_ID_CART));
         
         btnUpdateProduct = request.getParameter(Strings.BUTTON_UPDATE_PRODUCT_CART);
         btnDeleteProduct = request.getParameter(Strings.BUTTON_DELETE_PRODUCT_CART);
@@ -67,6 +71,7 @@ public class CartServlet extends HttpServlet {
             
             request.getSession().setAttribute(Strings.CART_KEY, orderDetail);
         } else if (btnUpdateProduct != null && orderDetail != null) {
+            productQuantityToOrder = Integer.parseInt(request.getParameter(Strings.PRODUCT_QUANTITY_TO_ORDER));
             orderDetail.getOrderItems()
                     .stream()
                     .filter(order -> order.getProduct().getId().equals(productId))

@@ -58,6 +58,7 @@ public class Strings {
     public static final String USER_KEY = "user";
     public static final String CART_KEY = "cart";
     public static final String PRODUCT_KEY = "products";
+    public static final String PAYMENT_METHOD_KEY = "paymentMethods";
     public static final String AVAILABLE_PRODUCT_KEY = "availableProducts";
     public static final String HOME_ERROR_MESSAGE_KEY = "homeErrorMessage";
     public static final String CART_ERROR_MESSAGE_KEY = "cartErrorMessage";
@@ -80,6 +81,7 @@ public class Strings {
     public static final String ERROR_WHILE_UPDATING_PRODUCT_CATEGORY = "An error occured while updating product category!";
     public static final String ERROR_WHILE_DELETING_PRODUCT_CATEGORY = "An error occured while deleting product category!";
     public static final String ERROR_WITH_ORDER_QUANTITY = "Order quantity cannot be greater than total quantity of the product!";
+    public static final String ERROR_ITEM_ALREADY_IN_CART = "Desired item is already added to cart!";
     
     // application constants
     public static final String EMPTY_STRING = "";

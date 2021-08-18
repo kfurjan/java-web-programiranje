@@ -7,6 +7,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib uri="http://algebra.hr/taglib" prefix="jwp" %>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 
 <!DOCTYPE html>
 <html>
@@ -89,6 +90,12 @@
         
         <div class="container p-5">
              <div class="row justify-content-center">
+                <c:if test="${empty user}"> 
+                   <div class="alert alert-primary alert-dismissible fade show" role="alert">
+                        In order to complete purchase, please log in
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                   </div>
+                </c:if>
                 <c:if test="${not empty cartErrorMessage}">
                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
                         ${cartErrorMessage}
@@ -115,26 +122,28 @@
                                 <td data-category-id="${orderItem.product.category.id}">${orderItem.product.category}</td>
                                 <td data-product-quantity="${orderItem.product.quantity}">${orderItem.quantity}</td>
                                 <td>${orderItem.product.price}</td>
-                                <td>${orderItem.quantity * orderItem.product.price}</td>
+                                <td><fmt:formatNumber type="number" maxFractionDigits="2" value="${orderItem.quantity * orderItem.product.price}" /></td>
                             </tr>
                         </c:forEach>
                     </c:if>
                     </tbody>
                   </table>
                  <div class="p-3 d-flex justify-content-end">
-                     <h4>
-                         Total price: <b>${cart.totalPrice} kn</b>
-                     </h4>
+                     <h3>
+                         Total price: <b><fmt:formatNumber type="number" maxFractionDigits="2" value="${cart.totalPrice}" /> kn</b>
+                     </h3>
                  </div>
-                 <div class="d-flex justify-content-center">
-                     <div class="d-grid gap-2 col-2 mx-auto">
-                        <button type="button" class="btn btn-outline-primary btn-lg">Buy</button>
+                <c:if test="${not empty user}"> 
+                    <div class="d-flex justify-content-center">
+                        <div class="d-grid gap-2 col-2 mx-auto">
+                           <button id="btnPurchase" type="button" class="btn btn-outline-primary btn-lg">Purchase</button>
+                       </div>
                     </div>
-                 </div>
+                 </c:if>
              </div>
          </div>
                      
-         <!-- Modal - Order product -->
+        <!-- Modal - Update/Delete cart -->
         <div id="cartModal" class="modal fade" tabindex="-1" aria-labelledby="cartModal" aria-hidden="true">
           <div class="modal-dialog">
             <div class="modal-content">
@@ -169,6 +178,37 @@
               <div class="modal-footer">
                 <button id="btnUpdateCartItem" name="btnUpdateCartItem" type="button" class="btn btn-outline-success" value="btnUpdateCartItem_clicked">Update</button>
                 <button id="btnDeleteCartItem" name="btnDeleteCartItem" type="button" class="btn btn-outline-danger" value="btnDeleteCartItem_clicked">Delete</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Modal - Buy -->
+        <div id="buyModal" class="modal fade" tabindex="-1" aria-labelledby="buyModal" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Confirm purchase</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                  <form id="orderProductForm">
+                    <div class="mb-3">
+                      <label for="totalPrice" class="form-label">Total price</label>
+                      <input type="text" class="form-control" id="totalPrice" name="totalPrice" disabled>
+                    </div>
+                    <div class="mb-3">
+                        <label for="paymentMethods" class="form-label">Select payment method</label>
+                        <select id="paymentMethods" class="form-select">
+                            <c:forEach items="${paymentMethods}" var="paymentMethod">
+                                <option value="${paymentMethod.id}">${paymentMethod.name}</option>
+                            </c:forEach>
+                        </select>                    
+                    </div>
+                  </form>
+              </div>
+              <div class="modal-footer">
+                <button id="btnConfirmPurchase" name="btnConfirmPurchase" type="button" class="btn btn-outline-primary" value="btnConfirmPurchase_clicked">Confirm</button>
               </div>
             </div>
           </div>
@@ -256,6 +296,16 @@
                             location.reload();
                         }
                     });
+                });
+                
+                // Purchase
+                $('#btnPurchase').on("click", function(e) {
+                    e.preventDefault();
+                    $('#totalPrice').val(${cart.totalPrice});
+                    
+                    new bootstrap.Modal(
+                        document.getElementById('buyModal')
+                    ).show();
                 });
             });
         </script>

@@ -7,8 +7,6 @@ import hr.algebra.model.ProductCategory;
 import hr.algebra.model.User;
 import hr.algebra.util.Strings;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -95,6 +93,14 @@ public class OrderProductServlet extends HttpServlet {
         User user = (User) request.getSession().getAttribute(Strings.USER_KEY);
         
         if (orderDetail != null) {
+            if (orderDetail.getOrderItems().stream().anyMatch(item -> item.getProduct().getId().equals(productId))) {
+                request.getSession().setAttribute(
+                    Strings.HOME_ERROR_MESSAGE_KEY,
+                    Strings.ERROR_ITEM_ALREADY_IN_CART
+                );
+                return;
+            }
+            
             Product product = new Product(
                 productId,
                 productName,
@@ -119,8 +125,6 @@ public class OrderProductServlet extends HttpServlet {
                 orderDetail
             );
         } else {
-            orderDetail = new OrderDetail();
-            
             Product product = new Product(
                 productId,
                 productName,
@@ -130,6 +134,7 @@ public class OrderProductServlet extends HttpServlet {
                 productTotalQuantity,
                 new ProductCategory(productCategoryId, productCategoryName)
             );
+            orderDetail = new OrderDetail();
             OrderItem orderItem = new OrderItem(productQuantityToOrder, product);
             
             orderDetail.setTotalPrice(
