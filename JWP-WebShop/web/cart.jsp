@@ -74,7 +74,7 @@
                                     <c:otherwise>
                                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                                             <h5 class="dropdown-header">User information</h5>
-                                            <li><a class="dropdown-item" href="#">Completed purchases</a></li>
+                                            <li><a class="dropdown-item" href="/PurchaseHistory">Completed purchases</a></li>
                                             <div class="dropdown-divider"></div>
                                             <li><a class="dropdown-item text-danger" href="/Logout">Log out</a></li>
                                         </ul>
@@ -90,6 +90,12 @@
         
         <div class="container p-5">
              <div class="row justify-content-center">
+                <c:if test="${not empty successfulPurchase}"> 
+                   <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        ${successfulPurchase}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                   </div>
+                </c:if>
                 <c:if test="${empty user}"> 
                    <div class="alert alert-primary alert-dismissible fade show" role="alert">
                         In order to complete purchase, please log in
@@ -128,16 +134,19 @@
                     </c:if>
                     </tbody>
                   </table>
-                 <div class="p-3 d-flex justify-content-end">
-                     <h3>
-                         Total price: <b><fmt:formatNumber type="number" maxFractionDigits="2" value="${cart.totalPrice}" /> kn</b>
-                     </h3>
-                 </div>
-                <c:if test="${not empty user}"> 
-                    <div class="d-flex justify-content-center">
+                <div class="p-3 d-flex justify-content-end">
+                    <h3>
+                       Total price: <b><fmt:formatNumber type="number" maxFractionDigits="2" value="${cart.totalPrice}" /> kn</b>
+                    </h3>
+                </div>
+                <c:if test="${not empty user && not empty cart}"> 
+                    <div id="onDeliveryPaymentDiv" class="d-flex justify-content-center">
                         <div class="d-grid gap-2 col-2 mx-auto">
-                           <button id="btnPurchase" type="button" class="btn btn-outline-primary btn-lg">Purchase</button>
-                       </div>
+                           <button id="btnPayOnDelivery" type="button" class="btn btn-outline-primary btn-lg">Pay on delivery</button>
+                        </div>
+                    </div>
+                    <div class="p-5 d-flex justify-content-center">
+                        <div id="onPayPalPaymentDiv" class="d-grid gap-2 col-2 mx-auto"></div>
                     </div>
                  </c:if>
              </div>
@@ -183,39 +192,9 @@
           </div>
         </div>
         
-        <!-- Modal - Buy -->
-        <div id="buyModal" class="modal fade" tabindex="-1" aria-labelledby="buyModal" aria-hidden="true">
-          <div class="modal-dialog">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Confirm purchase</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-              </div>
-              <div class="modal-body">
-                  <form id="orderProductForm">
-                    <div class="mb-3">
-                      <label for="totalPrice" class="form-label">Total price</label>
-                      <input type="text" class="form-control" id="totalPrice" name="totalPrice" disabled>
-                    </div>
-                    <div class="mb-3">
-                        <label for="paymentMethods" class="form-label">Select payment method</label>
-                        <select id="paymentMethods" class="form-select">
-                            <c:forEach items="${paymentMethods}" var="paymentMethod">
-                                <option value="${paymentMethod.id}">${paymentMethod.name}</option>
-                            </c:forEach>
-                        </select>                    
-                    </div>
-                  </form>
-              </div>
-              <div class="modal-footer">
-                <button id="btnConfirmPurchase" name="btnConfirmPurchase" type="button" class="btn btn-outline-primary" value="btnConfirmPurchase_clicked">Confirm</button>
-              </div>
-            </div>
-          </div>
-        </div>
-        
         <jwp:js-tag/>
-        <script>
+        <script src="https://www.paypal.com/sdk/js?client-id=Aa18pNSaHaWmhAChuoYk3smo2VYRhiNjAZU7PAv0s_UvDXr_Yj7jS0Q8ickqkKfQRgQhaQ9W40LqoqJJ&currency=EUR"></script>
+        <script>            
             $(function() {
                 let productId, categoryId, sku;
                 let table = $('#cartTable').DataTable();
@@ -298,15 +277,47 @@
                     });
                 });
                 
-                // Purchase
-                $('#btnPurchase').on("click", function(e) {
-                    e.preventDefault();
-                    $('#totalPrice').val(${cart.totalPrice});
-                    
-                    new bootstrap.Modal(
-                        document.getElementById('buyModal')
-                    ).show();
+                // Pay on-delivery
+                $('#btnPayOnDelivery').on("click", function(e) {
+                    e.preventDefault();                    
+                    $.ajax({
+                        url: 'Cart',
+                        type: 'POST', 
+                        data: {
+                            paymentType: 'On delivery'
+                        },
+                        success: function () {
+                            location.reload();
+                        }
+                    });
                 });
+                
+                // Pay with PayPal
+                paypal.Buttons({
+                    createOrder: function(data, actions) {
+                        return actions.order.create({
+                            purchase_units: [{
+                                amount: {
+                                    value: "${cart.totalPrice}"
+                                }
+                            }]
+                        });
+                    },
+                    onApprove: function(data, actions) {
+                      return actions.order.capture().then(function(details) {
+                        $.ajax({
+                            url: 'Cart',
+                            type: 'POST', 
+                            data: {
+                                paymentType: 'PayPal'
+                            },
+                            success: function () {
+                                location.reload();
+                            }
+                        });
+                      });
+                    }
+                }).render('#onPayPalPaymentDiv');             
             });
         </script>
     </body>

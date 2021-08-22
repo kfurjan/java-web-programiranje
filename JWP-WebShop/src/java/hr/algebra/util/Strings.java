@@ -53,6 +53,12 @@ public class Strings {
     public static final String PRODUCT_ID_CART = "productIdCart";
     public static final String BUTTON_UPDATE_PRODUCT_CART = "btnUpdateCartItem";
     public static final String BUTTON_DELETE_PRODUCT_CART = "btnDeleteCartItem";
+    public static final String PAYMENT_TYPE = "paymentType";
+    public static final String PAYPAL_PAYMENT = "PayPal";
+    public static final String DELIVERY_PAYMENT = "On delivery";
+    public static final String PURCHASE_COMPLETED = "Completed";
+    
+    public static final String ORDER_DETAILS = "orderDetails";
     
     // request, session keys
     public static final String USER_KEY = "user";
@@ -66,10 +72,13 @@ public class Strings {
     public static final String ERROR_MESSAGE_KEY = "errorMessage";
     public static final String PRODUCT_CATEGORY_KEY = "productCategory";
     public static final String PRODUCT_ERROR_MESSAGE_KEY = "productErrorMessage";
+    public static final String CART_SUCCESSFULL_PURCHASE_KEY = "successfulPurchase";
     public static final String PRODUCT_CATEGORY_ERROR_MESSAGE_KEY = "productCategoryErrorMessage";
     
     // view strings
     public static final String GENERAL_ERROR = "An error occured!";
+    public static final String SUCCESSFUL_PURCHASE = "Purchase was processed successfully!";
+    public static final String UNSUCCESSFUL_PURCHASE = "Purchase was not processed successfully!";
     public static final String FIELDS_CANT_BE_EMPTY = "Fields cannot be empty!";
     public static final String NON_MATCHING_PASSWORDS = "Passwords do not match!";
     public static final String INVALID_EMAIL_PASSWORD = "Invalid email address or password!";
@@ -97,4 +106,5 @@ public class Strings {
     public static final String REGISTER_ENDPOINT = "/register.jsp";
     public static final String USER_HISTORY_ENDPOINT = "/userHistory.jsp";
     public static final String PRODUCT_CATEGORY_ENDPOINT = "/productCategory.jsp";
+    public static final String PURCHASE_HISTORY_ENDPOINT = "/purchaseHistory.jsp";
 }

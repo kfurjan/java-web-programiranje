@@ -20,6 +20,7 @@ public class UserHistoryRepositorySQL implements UserHistoryRepository {
      */
     @Override
     public void saveUserHistory(UserHistory userHistory) {
+        
         try {
             EntityManager entityManager = EntityManagerSingleton.getInstance();
             

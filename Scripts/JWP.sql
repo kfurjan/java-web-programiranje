@@ -125,3 +125,12 @@ VALUES
   ('On delivery'),
   ('PayPal')
 GO
+
+-- Insert rows into table 'PaymentStatus'
+INSERT INTO PaymentStatus
+( -- columns to insert data into
+ [Name]
+)
+VALUES
+  ('Completed')
+GO

@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package hr.algebra.model;
 
 import java.io.Serializable;
@@ -35,6 +30,8 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "OrderDetail.findById", query = "SELECT o FROM OrderDetail o WHERE o.id = :id")
     , @NamedQuery(name = "OrderDetail.findByTotalPrice", query = "SELECT o FROM OrderDetail o WHERE o.totalPrice = :totalPrice")})
 public class OrderDetail implements Serializable {
+    
+    public static final String FIND_ALL_QUERY = "OrderDetail.findAll";
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -46,7 +43,7 @@ public class OrderDetail implements Serializable {
     private Double totalPrice;
     @JoinColumn(name = "PaymentID", referencedColumnName = "ID")
     @ManyToOne
-    private PaymentDetail payment;
+    private PaymentDetail paymentDetail;
     @JoinColumn(name = "UserID", referencedColumnName = "ID")
     @ManyToOne
     private User user;
@@ -78,12 +75,12 @@ public class OrderDetail implements Serializable {
         this.totalPrice = totalPrice;
     }
 
-    public PaymentDetail getPayment() {
-        return payment;
+    public PaymentDetail getPaymentDetail() {
+        return paymentDetail;
     }
 
-    public void setPayment(PaymentDetail payment) {
-        this.payment = payment;
+    public void setPaymentDetail(PaymentDetail paymentDetail) {
+        this.paymentDetail = paymentDetail;
     }
 
     public User getUser() {

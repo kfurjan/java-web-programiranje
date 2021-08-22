@@ -27,7 +27,12 @@ public class LogOutServlet extends HttpServlet {
         request.getSession().setAttribute(Strings.USER_KEY, null);
         request.getSession().setAttribute(Strings.CART_KEY, null);
         request.getSession().setAttribute(Strings.PRODUCT_KEY, null);
-        request.getSession().setAttribute(Strings.PRODUCT_CATEGORY_KEY, null);
+        request.getSession().setAttribute(Strings.ERROR_MESSAGE_KEY, null);
+        request.getSession().setAttribute(Strings.HOME_ERROR_MESSAGE_KEY, null);
+        request.getSession().setAttribute(Strings.CART_ERROR_MESSAGE_KEY, null);
+        request.getSession().setAttribute(Strings.PRODUCT_ERROR_MESSAGE_KEY, null);
+        request.getSession().setAttribute(Strings.ERROR_WITH_ORDER_QUANTITY, null);
+        request.getSession().setAttribute(Strings.CART_SUCCESSFULL_PURCHASE_KEY, null);
         response.sendRedirect(Strings.HOME_ENDPOINT);
     }
 
@@ -45,7 +50,12 @@ public class LogOutServlet extends HttpServlet {
         request.getSession().setAttribute(Strings.USER_KEY, null);
         request.getSession().setAttribute(Strings.CART_KEY, null);
         request.getSession().setAttribute(Strings.PRODUCT_KEY, null);
-        request.getSession().setAttribute(Strings.PRODUCT_CATEGORY_KEY, null);
+        request.getSession().setAttribute(Strings.ERROR_MESSAGE_KEY, null);
+        request.getSession().setAttribute(Strings.HOME_ERROR_MESSAGE_KEY, null);
+        request.getSession().setAttribute(Strings.CART_ERROR_MESSAGE_KEY, null);
+        request.getSession().setAttribute(Strings.PRODUCT_ERROR_MESSAGE_KEY, null);
+        request.getSession().setAttribute(Strings.ERROR_WITH_ORDER_QUANTITY, null);
+        request.getSession().setAttribute(Strings.CART_SUCCESSFULL_PURCHASE_KEY, null);
         response.sendRedirect(Strings.HOME_ENDPOINT);
     }
 }

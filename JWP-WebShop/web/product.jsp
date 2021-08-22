@@ -16,7 +16,7 @@
         <jwp:css-tag/>
     </head>
     <body>
-        <%-- NAVBAR --%>
+                <%-- NAVBAR --%>
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
             <div class="container">
                 <a class="navbar-brand" href="/">JWP WebShop</a>
@@ -73,7 +73,7 @@
                                     <c:otherwise>
                                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                                             <h5 class="dropdown-header">User information</h5>
-                                            <li><a class="dropdown-item" href="#">Completed purchases</a></li>
+                                            <li><a class="dropdown-item" href="/PurchaseHistory">Completed purchases</a></li>
                                             <div class="dropdown-divider"></div>
                                             <li><a class="dropdown-item text-danger" href="/Logout">Log out</a></li>
                                         </ul>

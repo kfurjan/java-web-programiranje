@@ -1,6 +1,6 @@
 <%-- 
-    Document   : userHistory
-    Created on : 11.08.2021., 18:56:09
+    Document   : purchaseHistory
+    Created on : 21.08.2021., 20:18:07
     Author     : Kevin
 --%>
 
@@ -11,7 +11,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>User history</title>
+        <title>Purchase history</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <jwp:css-tag/>
     </head>
@@ -86,25 +86,29 @@
                 </div>
             </div>
         </nav>
-
-         <div class="container p-5">
+        
+        <div class="container p-5">
              <div class="row justify-content-center">
-                <table id="userHistoryTable" class="table table-striped table-borderless table-hover">
+                <table id="orderDetailsTable" class="table table-striped table-borderless table-hover">
                     <thead>
                       <tr>
-                        <th scope="col">#</th>
                         <th scope="col">User</th>
-                        <th scope="col">Date and time</th>
-                        <th scope="col">IP Address</th>
+                        <th scope="col">Time</th>
+                        <th scope="col">Purchase #</th>
+                        <th scope="col">Purchase Status</th>
+                        <th scope="col">Payment Method</th>
+                        <th scope="col">Total price (kn)</th>
                       </tr>
                     </thead>
                     <tbody>
-                    <c:forEach items="${userHistory}" var="userHistory">
+                    <c:forEach items="${orderDetails}" var="orderDetail">
                         <tr>
-                            <th scope="row">${userHistory.id}</th>
-                            <td>${userHistory.user}</td>
-                            <td>${userHistory.logInAt}</td>
-                            <td>${userHistory.ipAddress}</td>
+                            <td>${orderDetail.user}</td>
+                            <td>${orderDetail.paymentDetail.createdAt}</td>
+                            <td>${orderDetail.id}</td>
+                            <td>${orderDetail.paymentDetail.paymentStatus}</td>
+                            <td>${orderDetail.paymentDetail.paymentMethod}</td>
+                            <td>${orderDetail.totalPrice}</td>
                         </tr>
                     </c:forEach>
                     </tbody>
@@ -115,7 +119,7 @@
         <jwp:js-tag/>
         <script>
             $(document).ready(function () {
-                $('#userHistoryTable').DataTable();
+                $('#orderDetailsTable').DataTable();
             });
         </script>
     </body>

@@ -1,9 +1,12 @@
 package hr.algebra.servlet;
 
-import hr.algebra.repository.product.ProductRepository;
-import hr.algebra.repository.product.ProductRepositoryFactory;
+import hr.algebra.model.OrderDetail;
+import hr.algebra.model.User;
+import hr.algebra.repository.purchase.PurchaseRepository;
+import hr.algebra.repository.purchase.PurchaseRepositoryFactory;
 import hr.algebra.util.Strings;
 import java.io.IOException;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -13,9 +16,9 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Kevin
  */
-public class HomeServlet extends HttpServlet {
+public class PurchaseHistoryServlet extends HttpServlet {
 
-    private final ProductRepository productRepository = ProductRepositoryFactory.getRepository();
+    private final PurchaseRepository purchaseRepository = PurchaseRepositoryFactory.getRepository();
 
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -28,14 +31,14 @@ public class HomeServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.getSession().setAttribute(Strings.CART_ERROR_MESSAGE_KEY, null);
-        request.getSession().setAttribute(Strings.CART_SUCCESSFULL_PURCHASE_KEY, null);
+        User user = (User) request.getSession().getAttribute(Strings.USER_KEY);
+        List<OrderDetail> orderDetails = 
+                user.getUserType().getType().equals("User") 
+                ? user.getOrderDetailList() 
+                : purchaseRepository.getAllOrderDetails();
         
-        request.getSession().setAttribute(
-            Strings.AVAILABLE_PRODUCT_KEY,
-            productRepository.getAllAvailableProducts()
-        );
-        response.sendRedirect(Strings.HOME_ENDPOINT);
+        request.setAttribute(Strings.ORDER_DETAILS, orderDetails);
+        request.getRequestDispatcher(Strings.PURCHASE_HISTORY_ENDPOINT).forward(request, response);
     }
 
     /**

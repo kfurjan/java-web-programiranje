@@ -5,8 +5,6 @@ import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -32,14 +30,13 @@ public class PaymentMethod implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "ID")
     private Integer id;
     @Basic(optional = false)
     @Column(name = "Name")
     private String name;
-    @OneToMany(mappedBy = "paymentMethodID")
+    @OneToMany(mappedBy = "paymentMethod")
     private List<PaymentDetail> paymentDetailList;
 
     public PaymentMethod() {
@@ -47,6 +44,10 @@ public class PaymentMethod implements Serializable {
 
     public PaymentMethod(Integer id) {
         this.id = id;
+    }
+
+    public PaymentMethod(String name) {
+        this.name = name;
     }
 
     public PaymentMethod(Integer id, String name) {
@@ -101,7 +102,7 @@ public class PaymentMethod implements Serializable {
 
     @Override
     public String toString() {
-        return "hr.algebra.model.PaymentMethod[ id=" + id + " ]";
+        return name;
     }
     
 }
